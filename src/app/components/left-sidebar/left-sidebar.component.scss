@@ -1,0 +1,53 @@
+@import '~src/variables.scss';
+
+nav#sidebar {
+    position: fixed;
+    width: 32rem;
+    height: calc(100vh - 90px);
+    background: $alto-white;
+    overflow: auto;
+
+    h3 {
+        border-bottom: 1px $ghost-grey solid;
+
+        span {
+            font-size: 1.2rem;
+            color: $grey;
+        }
+    }
+
+    input.searchbar {
+        font-size: 1.4rem;
+        background-color: lighten($alto-white, 10%);
+        width: 100%;
+        border-bottom: 1px $ghost-grey solid;
+        color: $bootstrap-black;
+        cursor: text;
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $grey;
+        font-weight: 300;
+        opacity: 1; /* Firefox */
+    }
+
+    div.category {
+        font-size: 1.2rem;
+        width: 100%;
+        color: $bootstrap-black;
+        cursor: pointer;
+        border-bottom: 1px $ghost-grey solid;
+
+        &:hover {
+            background-color: darken($alto-white, 5%);
+        }
+
+        &.active {
+            background-color: $anakiwa;
+
+            &:hover {
+                background-color: darken($anakiwa, 5%);
+            }
+        }
+    }
+}
