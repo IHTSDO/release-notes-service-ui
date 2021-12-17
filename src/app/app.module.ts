@@ -31,6 +31,8 @@ import {ReverseAlphabeticalPipe} from './pipes/reverse-alphabetical/reverse-alph
 import {LeftSidebarComponent} from './components/left-sidebar/left-sidebar.component';
 import {ReleaseNotesService} from './services/releaseNotes/release-notes.service';
 import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
+import { MainViewComponent } from './components/main-view/main-view.component';
+import {QuillModule} from 'ngx-quill';
 
 // SERVICE IMPORTS
 
@@ -45,7 +47,8 @@ import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
         BranchPipe,
         ProjectPipe,
         LeftSidebarComponent,
-        TextFilterPipe
+        TextFilterPipe,
+        MainViewComponent
     ],
     imports: [
         BrowserModule,
@@ -55,6 +58,7 @@ import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
         NgbTypeaheadModule,
         AppRoutingModule,
         ToastrModule.forRoot(),
+        QuillModule.forRoot()
     ],
     providers: [
         AuthenticationService,
