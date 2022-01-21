@@ -1,5 +1,14 @@
-<div id="main-view">
-    <div class="p-4 quill-container">
-        <quill-editor></quill-editor>
-    </div>
+<div id="main-view" *ngIf="activeReleaseNote">
+    <ng-container *ngIf="user">
+        <div class="p-5">
+            <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
+            <p>{{activeReleaseNote?.content}}</p>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!user">
+        <div class="p-4 quill-container">
+            <quill-editor></quill-editor>
+        </div>
+    </ng-container>
+    <button class="btn" (click)="flick()">TEMPORARY SWITCH BUTTON</button>
 </div>

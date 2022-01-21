@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 export class ReleaseNotesService {
 
     private releaseNotes = new Subject<any>();
+    private subjects = new Subject<any>();
     private activeReleaseNote = new Subject<any>();
 
     constructor(private http: HttpClient) {
@@ -22,6 +23,15 @@ export class ReleaseNotesService {
         return this.releaseNotes.asObservable();
     }
 
+    // Setters & Getters: Subjects
+    setSubjects(subjects) {
+        this.subjects.next(subjects);
+    }
+
+    getSubjects() {
+        return this.subjects.asObservable();
+    }
+
     // Setters & Getters: ActiveReleaseNote
     setActiveReleaseNote(releaseNote) {
         this.activeReleaseNote.next(releaseNote);
@@ -31,7 +41,11 @@ export class ReleaseNotesService {
         return this.activeReleaseNote.asObservable();
     }
 
+    httpGetSubjects() {
+        return this.http.get('/release-notes/MAIN/subjects');
+    }
+
     httpGetReleaseNotes() {
-        return this.http.get('/release-notes-service/release-notes');
+        return this.http.get('/release-notes/MAIN/lineitems');
     }
 }

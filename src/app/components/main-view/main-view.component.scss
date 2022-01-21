@@ -1,7 +1,28 @@
+@import '~src/variables.scss';
+
 div#main-view {
     margin-left: 32rem;
+    position: relative;
+    height: calc(100vh - 9rem);
 
     div.quill-container {
         min-height: 80vh;
+    }
+
+    h1 {
+        font-weight: 300;
+    }
+
+    p {
+        color: $river-bed;
+        font-size: 1.6rem;
+        line-height: 3rem;
+    }
+
+    button {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        background-color: $fruit-salad;
     }
 }

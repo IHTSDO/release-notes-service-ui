@@ -31,7 +31,7 @@ nav#sidebar {
         opacity: 1; /* Firefox */
     }
 
-    div.category {
+    div.line-item {
         font-size: 1.2rem;
         width: 100%;
         color: $bootstrap-black;
@@ -40,6 +40,14 @@ nav#sidebar {
 
         &:hover {
             background-color: darken($alto-white, 5%);
+        }
+
+        &.top-level {
+            background-color: darken($alto-white, 10%);
+
+            &:hover {
+                background-color: darken($alto-white, 10%);
+            }
         }
 
         &.active {

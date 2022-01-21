@@ -1,7 +1,12 @@
 <nav id="sidebar" class="footer-margin">
     <h3 class="p-3 mb-0">Release Notes</h3>
     <input type="search" class="searchbar py-2 px-3" [(ngModel)]="textFilter" placeholder="Search...">
-    <div *ngFor="let releaseNote of releaseNotes | alphabetical:'name' | textFilter:textFilter" class="category py-2 px-3"
-         (click)="selectReleaseNote(releaseNote)"
-         [class.active]="activeReleaseNote === releaseNote">{{releaseNote.name}}</div>
+    <ng-container *ngFor="let parent of releaseNotes">
+        <div class="line-item top-level py-2 px-3">{{parent.title}}</div>
+        <ng-container *ngFor="let child of parent.children | textFilter:textFilter">
+            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.active]="child?.title === activeReleaseNote?.title">
+                {{child.title}}
+            </div>
+        </ng-container>
+    </ng-container>
 </nav>

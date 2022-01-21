@@ -13,26 +13,32 @@ export class LeftSidebarComponent implements OnInit {
 
     releaseNotes: any[];
     releaseNotesSubscription: Subscription;
+    subjects: any[];
+    subjectsSubscription: Subscription;
     activeReleaseNote: any;
     activeReleaseNoteSubscription: Subscription;
 
     constructor(private releaseNotesService: ReleaseNotesService) {
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
+        this.subjectsSubscription = this.releaseNotesService.getSubjects().subscribe( data => this.subjects = data);
     }
 
     ngOnInit() {
-        // this.releaseNotesService.httpGetReleaseNotes().subscribe(data => {
-        //     this.releaseNotesService.setReleaseNotes(data);
-        //     this.releaseNotesService.setActiveReleaseNote(data[0]);
-        // });
+        this.releaseNotesService.httpGetSubjects().subscribe(subjects => {
+            this.releaseNotesService.setSubjects(subjects);
+
+            this.releaseNotesService.httpGetReleaseNotes().subscribe(lineitems => {
+                this.releaseNotesService.setReleaseNotes(lineitems);
+            });
+        });
     }
 
-    selectReleaseNote(template) {
-        if (this.activeReleaseNote === template) {
+    selectReleaseNote(lineitem) {
+        if (this.activeReleaseNote === lineitem) {
             this.releaseNotesService.setActiveReleaseNote(undefined);
         } else {
-            this.releaseNotesService.setActiveReleaseNote(template);
+            this.releaseNotesService.setActiveReleaseNote(lineitem);
         }
     }
 }
