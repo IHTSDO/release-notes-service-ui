@@ -16,21 +16,6 @@ nav#sidebar {
         }
     }
 
-    input.searchbar {
-        font-size: 1.4rem;
-        background-color: lighten($alto-white, 10%);
-        width: 100%;
-        border-bottom: 1px $ghost-grey solid;
-        color: $bootstrap-black;
-        cursor: text;
-    }
-
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $grey;
-        font-weight: 300;
-        opacity: 1; /* Firefox */
-    }
-
     div.line-item {
         font-size: 1.2rem;
         width: 100%;
@@ -38,15 +23,19 @@ nav#sidebar {
         cursor: pointer;
         border-bottom: 1px $ghost-grey solid;
 
+        &.odd {
+            background-color: darken($alto-white, 2%);
+        }
+
         &:hover {
             background-color: darken($alto-white, 5%);
         }
 
         &.top-level {
-            background-color: darken($alto-white, 10%);
+            background-color: lighten($slate-grey, 25%);
 
             &:hover {
-                background-color: darken($alto-white, 10%);
+                background-color: lighten($slate-grey, 20%);
             }
         }
 

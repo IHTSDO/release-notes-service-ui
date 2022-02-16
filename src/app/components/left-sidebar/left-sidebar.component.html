@@ -1,12 +1,23 @@
 <nav id="sidebar" class="footer-margin">
     <h3 class="p-3 mb-0">Release Notes</h3>
-    <input type="search" class="searchbar py-2 px-3" [(ngModel)]="textFilter" placeholder="Search...">
     <ng-container *ngFor="let parent of releaseNotes">
         <div class="line-item top-level py-2 px-3">{{parent.title}}</div>
-        <ng-container *ngFor="let child of parent.children | textFilter:textFilter">
-            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.active]="child?.title === activeReleaseNote?.title">
+        <ng-container *ngFor="let child of parent.children | textFilter:textFilter; let odd = odd">
+            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.title === activeReleaseNote?.title">
                 {{child.title}}
             </div>
         </ng-container>
     </ng-container>
 </nav>
+
+<app-modal id="changes-modal" class="modal">
+    <div header><h3 class="mb-0">Changes Detected<span class="px-2"></span></h3></div>
+    <div body>
+        <p>There are unsaved changes to this item. Do you want to save these changes, or discard them?</p>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('changes-modal')">CANCEL</button>
+        <button type="button" class="btn reject ms-3" (click)="discard(); closeModal('changes-modal')">DISCARD</button>
+        <button type="button" class="btn accept ms-3" (click)="save(); closeModal('changes-modal')">SAVE</button>
+    </div>
+</app-modal>

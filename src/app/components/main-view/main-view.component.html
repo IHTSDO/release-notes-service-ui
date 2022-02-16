@@ -1,14 +1,43 @@
+<div id="pdf-view2" *ngIf="!activeReleaseNote">
+    <ng-container *ngFor="let releaseNote of releaseNotes">
+        <div class="p-5" *ngFor="let note of releaseNote.children">
+            <h1 class="mb-3">{{note?.title}}</h1>
+            <showdown [value]="note?.content"></showdown>
+        </div>
+    </ng-container>
+</div>
+
+
 <div id="main-view" *ngIf="activeReleaseNote">
     <ng-container *ngIf="user">
         <div class="p-5">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
-            <p>{{activeReleaseNote?.content}}</p>
+            <showdown [value]="activeReleaseNote?.content"></showdown>
         </div>
     </ng-container>
     <ng-container *ngIf="!user">
-        <div class="p-4 quill-container">
-            <quill-editor></quill-editor>
+        <div class="p-5 quill-container">
+            <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
+            <quill-editor [(ngModel)]="activeReleaseNote.content" format="text" (keyup)="setEditedContent(true)"></quill-editor>
         </div>
     </ng-container>
-    <button class="btn" (click)="flick()">TEMPORARY SWITCH BUTTON</button>
 </div>
+<!--<button *ngIf="editedContent" class="btn save rounded-pill px-4" (click)="openModal('changes-modal')">SAVE</button>-->
+<button *ngIf="editedContent" class="btn save rounded-pill px-4" (click)="save()">SAVE</button>
+<button class="btn pdf rounded-pill px-4" (click)="openPDF()">DOWNLOAD PDF</button>
+<button class="btn switch" (click)="flick()">SWITCH</button>
+
+<app-modal id="pdf-modal" class="modal" [size]="'xl'">
+    <div header><h3 class="mb-0">PDF Preview<span class="px-2"></span></h3></div>
+    <div body>
+        <div id="pdf-view" *ngFor="let releaseNote of releaseNotes">
+            <div class="p-5" *ngFor="let note of releaseNote.children">
+                <h1 class="mb-3">{{note?.title}}</h1>
+                <showdown [value]="note?.content"></showdown>
+            </div>
+        </div>
+    </div>
+    <div footer>
+        <button type="button" class="btn accept" (click)="openPDF(); closeModal('pdf-modal')">Download PDF</button>
+    </div>
+</app-modal>

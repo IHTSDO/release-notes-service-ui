@@ -1,12 +1,21 @@
 @import '~src/variables.scss';
 
-div#main-view {
+
+
+div#main-view, div#pdf-view2 {
     margin-left: 32rem;
     position: relative;
     height: calc(100vh - 9rem);
+    background-color: $white;
+    overflow: scroll;
 
     div.quill-container {
-        min-height: 80vh;
+        max-height: 80vh;
+
+        quill-editor {
+
+
+        }
     }
 
     h1 {
@@ -18,11 +27,38 @@ div#main-view {
         font-size: 1.6rem;
         line-height: 3rem;
     }
+}
 
-    button {
+button {
+    &.pdf {
+        position: absolute;
+        background-color: $wisteria;
+        color: $white;
+        right: 3rem;
+        bottom: 5rem;
+
+        &:hover {
+            background-color: darken($wisteria, 10%);
+        }
+    }
+
+    &.save {
+        position: absolute;
+        background-color: $fruit-salad;
+        color: $white;
+        right: 20rem;
+        bottom: 5rem;
+
+        &:hover {
+            background-color: darken($fruit-salad, 10%);
+        }
+    }
+
+    &.switch {
         position: absolute;
         right: 1rem;
-        bottom: 1rem;
-        background-color: $fruit-salad;
+        bottom: 0.5rem;
+        z-index: 999999;
+        color: $white;
     }
 }
