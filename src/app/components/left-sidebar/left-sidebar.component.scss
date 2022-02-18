@@ -7,12 +7,45 @@ nav#sidebar {
     background: $alto-white;
     overflow: auto;
 
-    h3 {
+    div.header {
         border-bottom: 1px $ghost-grey solid;
+        height: 4rem;
 
-        span {
-            font-size: 1.2rem;
-            color: $grey;
+        h3 {
+            span {
+                font-size: 1.2rem;
+                color: $grey;
+            }
+        }
+
+        div.button-container {
+            padding: 8px;
+
+            button {
+                height: 2.4rem;
+                width: 2.4rem;
+                color: $white;
+                font-size: 1.4rem;
+                padding-left: 9px;
+                display: flex;
+                justify-content: center;
+
+                &.new {
+                    background-color: lighten($fruit-salad, 10%);
+
+                    &:hover {
+                        background-color: $fruit-salad;
+                    }
+                }
+
+                &.pdf {
+                    background-color: lighten($wisteria, 10%);
+
+                    &:hover {
+                        background-color: $wisteria;
+                    }
+                }
+            }
         }
     }
 

@@ -2,7 +2,7 @@
 
 
 
-div#main-view, div#pdf-view2 {
+div#main-view, div#all-view {
     margin-left: 32rem;
     position: relative;
     height: calc(100vh - 9rem);
@@ -27,38 +27,35 @@ div#main-view, div#pdf-view2 {
         font-size: 1.6rem;
         line-height: 3rem;
     }
-}
 
-button {
-    &.pdf {
+    button {
         position: absolute;
-        background-color: $wisteria;
+        height: 3.2rem;
+        width: 3.2rem;
         color: $white;
-        right: 3rem;
-        bottom: 5rem;
 
-        &:hover {
-            background-color: darken($wisteria, 10%);
+        &.save {
+            background-color: $fruit-salad;
+            right: 6rem;
+            top: 2rem;
+            padding-left: 9px;
+
+            &:hover {
+                background-color: darken($fruit-salad, 10%);
+            }
+        }
+
+        &.edit-toggle {
+            background-color: $sea-buckthorn;
+            right: 2rem;
+            top: 2rem;
+            padding-left: 8px;
+
+            &:hover {
+                background-color: darken($sea-buckthorn, 10%);
+            }
         }
     }
-
-    &.save {
-        position: absolute;
-        background-color: $fruit-salad;
-        color: $white;
-        right: 20rem;
-        bottom: 5rem;
-
-        &:hover {
-            background-color: darken($fruit-salad, 10%);
-        }
-    }
-
-    &.switch {
-        position: absolute;
-        right: 1rem;
-        bottom: 0.5rem;
-        z-index: 999999;
-        color: $white;
-    }
 }
+
+

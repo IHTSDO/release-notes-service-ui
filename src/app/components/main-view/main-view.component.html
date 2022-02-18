@@ -1,4 +1,4 @@
-<div id="pdf-view2" *ngIf="!activeReleaseNote">
+<div id="all-view" *ngIf="!activeReleaseNote">
     <ng-container *ngFor="let releaseNote of releaseNotes">
         <div class="p-5" *ngFor="let note of releaseNote.children">
             <h1 class="mb-3">{{note?.title}}</h1>
@@ -7,25 +7,23 @@
     </ng-container>
 </div>
 
-
 <div id="main-view" *ngIf="activeReleaseNote">
-    <ng-container *ngIf="user">
+    <button *ngIf="editedContent" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
+    <button class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
+
+    <ng-container *ngIf="!editMode">
         <div class="p-5">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
             <showdown [value]="activeReleaseNote?.content"></showdown>
         </div>
     </ng-container>
-    <ng-container *ngIf="!user">
+    <ng-container *ngIf="editMode">
         <div class="p-5 quill-container">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
             <quill-editor [(ngModel)]="activeReleaseNote.content" format="text" (keyup)="setEditedContent(true)"></quill-editor>
         </div>
     </ng-container>
 </div>
-<!--<button *ngIf="editedContent" class="btn save rounded-pill px-4" (click)="openModal('changes-modal')">SAVE</button>-->
-<button *ngIf="editedContent" class="btn save rounded-pill px-4" (click)="save()">SAVE</button>
-<button class="btn pdf rounded-pill px-4" (click)="openPDF()">DOWNLOAD PDF</button>
-<button class="btn switch" (click)="flick()">SWITCH</button>
 
 <app-modal id="pdf-modal" class="modal" [size]="'xl'">
     <div header><h3 class="mb-0">PDF Preview<span class="px-2"></span></h3></div>

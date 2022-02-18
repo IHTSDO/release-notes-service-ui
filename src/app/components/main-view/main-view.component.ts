@@ -26,8 +26,8 @@ export class MainViewComponent implements OnInit {
     userSubscription: Subscription;
     editedContent: any;
     editedContentSubscription: Subscription;
-
-    @ViewChild('pdfView') pdfView: ElementRef;
+    editMode: any;
+    editModeSubscription: Subscription;
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
@@ -36,6 +36,7 @@ export class MainViewComponent implements OnInit {
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
+        this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
     }
 
@@ -61,11 +62,11 @@ export class MainViewComponent implements OnInit {
         this.releaseNotesService.setEditedContent(value);
     }
 
-    flick(): void {
-        if (this.user) {
-            this.user = undefined;
+    editToggle(): void {
+        if (this.editMode) {
+            this.editMode = false;
         } else {
-            this.authenticationService.setUser();
+            this.editMode = true;
         }
     }
 

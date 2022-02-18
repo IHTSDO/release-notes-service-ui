@@ -24,6 +24,8 @@ export class LeftSidebarComponent implements OnInit {
     activeReleaseNoteSubscription: Subscription;
     editedContent: any;
     editedContentSubscription: Subscription;
+    editMode: any;
+    editModeSubscription: Subscription;
 
     lineItemTempStorage: any;
 
@@ -33,6 +35,7 @@ export class LeftSidebarComponent implements OnInit {
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
+        this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.subjectsSubscription = this.releaseNotesService.getSubjects().subscribe( data => this.subjects = data);
     }
 
@@ -67,7 +70,12 @@ export class LeftSidebarComponent implements OnInit {
         this.releaseNotesService.httpGetReleaseNotes().subscribe(data => {
             this.releaseNotesService.setReleaseNotes(data);
             this.releaseNotesService.setActiveReleaseNote(this.lineItemTempStorage);
+            this.releaseNotesService.setEditMode(false);
         });
+    }
+
+    create(): void {
+
     }
 
     selectReleaseNote(lineitem) {
@@ -75,12 +83,17 @@ export class LeftSidebarComponent implements OnInit {
             this.lineItemTempStorage = lineitem;
             this.openModal('changes-modal');
         } else {
+            this.releaseNotesService.setEditMode(false);
             if (this.activeReleaseNote === lineitem) {
                 this.releaseNotesService.setActiveReleaseNote(undefined);
             } else {
                 this.releaseNotesService.setActiveReleaseNote(lineitem);
             }
         }
+    }
+
+    downloadPDF(): void {
+
     }
 
     cloneObject(object): any {

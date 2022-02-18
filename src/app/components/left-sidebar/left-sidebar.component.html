@@ -1,5 +1,13 @@
 <nav id="sidebar" class="footer-margin">
-    <h3 class="p-3 mb-0">Release Notes</h3>
+    <div class="header row g-0">
+        <div class="col">
+            <h3 class="p-3 mb-0">Release Notes</h3>
+        </div>
+        <div class="col button-container">
+            <button class="float-end btn new rounded-circle ms-3" (click)="openModal('new-modal')" [title]="'New Release Note'"><i class="fas fa-plus"></i></button>
+            <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>
+        </div>
+    </div>
     <ng-container *ngFor="let parent of releaseNotes">
         <div class="line-item top-level py-2 px-3">{{parent.title}}</div>
         <ng-container *ngFor="let child of parent.children | textFilter:textFilter; let odd = odd">
@@ -19,5 +27,21 @@
         <button type="button" class="btn" (click)="closeModal('changes-modal')">CANCEL</button>
         <button type="button" class="btn reject ms-3" (click)="discard(); closeModal('changes-modal')">DISCARD</button>
         <button type="button" class="btn accept ms-3" (click)="save(); closeModal('changes-modal')">SAVE</button>
+    </div>
+</app-modal>
+
+<app-modal id="new-modal" class="modal">
+    <div header><h3 class="mb-0">New Release Note<span class="px-2"></span></h3></div>
+    <div body>
+        <h4>Still under development</h4>
+<!--        <select class="form-select">-->
+<!--            <option>ONE</option>-->
+<!--            <option>TWO</option>-->
+<!--            <option>THREE</option>-->
+<!--        </select>-->
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('new-modal')">CANCEL</button>
+        <button type="button" class="btn accept ms-3" (click)="create(); closeModal('new-modal')">CREATE</button>
     </div>
 </app-modal>
