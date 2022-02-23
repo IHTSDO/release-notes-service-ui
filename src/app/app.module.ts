@@ -32,9 +32,9 @@ import {LeftSidebarComponent} from './components/left-sidebar/left-sidebar.compo
 import {ReleaseNotesService} from './services/releaseNotes/release-notes.service';
 import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
 import { MainViewComponent } from './components/main-view/main-view.component';
-import {QuillModule} from 'ngx-quill';
 import {ShowdownModule} from 'ngx-showdown';
 import {ModalComponent} from './components/modal/modal.component';
+import { TopLevelPipe } from './pipes/top-level/top-level.pipe';
 
 // SERVICE IMPORTS
 
@@ -51,7 +51,8 @@ import {ModalComponent} from './components/modal/modal.component';
         LeftSidebarComponent,
         TextFilterPipe,
         MainViewComponent,
-        ModalComponent
+        ModalComponent,
+        TopLevelPipe
     ],
     imports: [
         BrowserModule,
@@ -61,7 +62,6 @@ import {ModalComponent} from './components/modal/modal.component';
         NgbTypeaheadModule,
         AppRoutingModule,
         ToastrModule.forRoot(),
-        QuillModule.forRoot(),
         ShowdownModule
     ],
     providers: [

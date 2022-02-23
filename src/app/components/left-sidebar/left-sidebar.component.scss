@@ -50,6 +50,7 @@ nav#sidebar {
     }
 
     div.line-item {
+        position: relative;
         font-size: 1.2rem;
         width: 100%;
         color: $bootstrap-black;
@@ -60,10 +61,6 @@ nav#sidebar {
             background-color: darken($alto-white, 2%);
         }
 
-        &:hover {
-            background-color: darken($alto-white, 5%);
-        }
-
         &.top-level {
             background-color: lighten($slate-grey, 25%);
 
@@ -72,11 +69,35 @@ nav#sidebar {
             }
         }
 
+        &:hover {
+            background-color: darken($alto-white, 5%);
+
+            & > button {
+                display: block;
+            }
+        }
+
+
+
         &.active {
             background-color: $anakiwa;
 
             &:hover {
                 background-color: darken($anakiwa, 5%);
+            }
+        }
+
+        button {
+            display: none;
+            position: absolute;
+            background-color: transparent;
+            font-size: 1.4rem;
+            top: 0.3rem;
+            right: 0.3rem;
+            color: $mandy;
+
+            &:hover {
+                color: darken($mandy, 10%);
             }
         }
     }

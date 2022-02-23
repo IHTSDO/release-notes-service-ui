@@ -5,14 +5,18 @@
         </div>
         <div class="col button-container">
             <button class="float-end btn new rounded-circle ms-3" (click)="openModal('new-modal')" [title]="'New Release Note'"><i class="fas fa-plus"></i></button>
-            <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>
+<!--            <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>-->
         </div>
     </div>
     <ng-container *ngFor="let parent of releaseNotes">
-        <div class="line-item top-level py-2 px-3">{{parent.title}}</div>
+        <div class="line-item top-level py-2 px-3">
+            {{parent.title}}
+            <button (click)="openModal('delete-modal'); lineItemTempStorage = parent; $event.stopPropagation()"><i class="fas fa-times"></i></button>
+        </div>
         <ng-container *ngFor="let child of parent.children | textFilter:textFilter; let odd = odd">
             <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.title === activeReleaseNote?.title">
                 {{child.title}}
+                <button (click)="openModal('delete-modal'); lineItemTempStorage = child; $event.stopPropagation()"><i class="fas fa-times"></i></button>
             </div>
         </ng-container>
     </ng-container>
@@ -33,15 +37,44 @@
 <app-modal id="new-modal" class="modal">
     <div header><h3 class="mb-0">New Release Note<span class="px-2"></span></h3></div>
     <div body>
-        <h4>Still under development</h4>
-<!--        <select class="form-select">-->
-<!--            <option>ONE</option>-->
-<!--            <option>TWO</option>-->
-<!--            <option>THREE</option>-->
-<!--        </select>-->
+        <div class="input-group mb-3">
+            <span class="input-group-text"><h4 class="mb-0">Parent</h4></span>
+            <select class="form-select" [(ngModel)]="newNote.parentId">
+                <option [value]="undefined"></option>
+                <ng-container *ngFor="let note of releaseNotes | topLevel">
+                    <option [value]="note.id">{{note.title}}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text"><h4 class="mb-0">Title</h4></span>
+            <input #inputText class="form-control">
+        </div>
     </div>
     <div footer>
         <button type="button" class="btn" (click)="closeModal('new-modal')">CANCEL</button>
-        <button type="button" class="btn accept ms-3" (click)="create(); closeModal('new-modal')">CREATE</button>
+        <button type="button" class="btn accept ms-3" (click)="create(inputText.value); closeModal('new-modal')">CREATE</button>
+    </div>
+</app-modal>
+
+<app-modal id="delete-modal" class="modal">
+    <div header><h3 class="mb-0">Delete Release Note<span class="px-2"></span></h3></div>
+    <div body>
+        <h4 class="mb-0 p-3">Are you sure you wish to delete this release note?</h4>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('delete-modal')">CANCEL</button>
+        <button type="button" class="btn reject ms-3" (click)="delete(); closeModal('delete-modal')">DELETE</button>
+    </div>
+</app-modal>
+
+<app-modal id="delete-confirmation-modal" class="modal">
+    <div header><h3 class="mb-0">Delete Release Note<span class="px-2"></span></h3></div>
+    <div body>
+        <h4 class="mb-0 p-3">This includes all of its children. Are you sure?</h4>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('delete-confirmation-modal')">CANCEL</button>
+        <button type="button" class="btn reject ms-3" (click)="delete(true); closeModal('delete-confirmation-modal')">DELETE</button>
     </div>
 </app-modal>

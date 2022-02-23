@@ -28,6 +28,7 @@ export class LeftSidebarComponent implements OnInit {
     editModeSubscription: Subscription;
 
     lineItemTempStorage: any;
+    newNote = {parentId: '', level: '', subjectId: ''};
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private modalService: ModalService,
@@ -74,8 +75,46 @@ export class LeftSidebarComponent implements OnInit {
         });
     }
 
-    create(): void {
+    create(text): void {
+        this.releaseNotesService.httpPostSubject({title: text}).subscribe(subjectData => {
 
+            this.newNote.subjectId = subjectData['id'];
+
+            if (this.newNote.parentId) {
+                this.newNote.level = '2';
+            } else {
+                delete this.newNote.parentId;
+                this.newNote.level = '1';
+            }
+
+            this.releaseNotesService.httpPostReleaseNote(this.newNote).subscribe(
+                success => {
+                    this.toastr.success(success['title'], 'CREATED', this.toastrConfig);
+                    this.refresh();
+                    this.newNote = {parentId: '', level: '', subjectId: ''};
+                },
+                error => {
+                    this.toastr.error('You do not have authorization to do this action', 'ERROR', this.toastrConfig);
+                });
+        });
+    }
+
+    delete(override?: boolean): void {
+        if (this.lineItemTempStorage.level === 1 && !override) {
+            this.modalService.open('delete-confirmation-modal');
+        } else {
+            this.releaseNotesService.httpDeleteReleaseNote(this.lineItemTempStorage).subscribe(data => {
+                this.toastr.error(this.lineItemTempStorage.title, 'DELETED', this.toastrConfig);
+                this.refresh();
+                this.lineItemTempStorage = undefined;
+            });
+        }
+    }
+
+    refresh(): void {
+        this.releaseNotesService.httpGetReleaseNotes().subscribe(data => {
+            this.releaseNotesService.setReleaseNotes(data);
+        });
     }
 
     selectReleaseNote(lineitem) {

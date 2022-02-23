@@ -8,8 +8,8 @@
 </div>
 
 <div id="main-view" *ngIf="activeReleaseNote">
-    <button *ngIf="editedContent" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
-    <button class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
+    <button *ngIf="editMode" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
+    <button *ngIf="roleContains('RELEASE_LEAD')" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
 
     <ng-container *ngIf="!editMode">
         <div class="p-5">
@@ -20,7 +20,7 @@
     <ng-container *ngIf="editMode">
         <div class="p-5 quill-container">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
-            <quill-editor [(ngModel)]="activeReleaseNote.content" format="text" (keyup)="setEditedContent(true)"></quill-editor>
+            <div id="quill-editor"></div>
         </div>
     </ng-container>
 </div>

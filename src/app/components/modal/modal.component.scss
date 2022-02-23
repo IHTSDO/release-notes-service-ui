@@ -49,8 +49,15 @@ app-modal {
                 max-height: 80vh;
                 overflow: auto;
 
-                input, textarea, label {
+                input, textarea {
                     cursor: text;
+                }
+
+                select {
+                    cursor: pointer;
+                }
+
+                input, textarea, label, select {
                     color: $bootstrap-black;
                     font-weight: 300;
                     font-size: 1.4rem;

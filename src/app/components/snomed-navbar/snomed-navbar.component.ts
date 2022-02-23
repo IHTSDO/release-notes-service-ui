@@ -31,13 +31,22 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authenticationService.setUser();
+        this.authenticationService.httpGetUser().subscribe(user => {
+            this.authenticationService.setUser(user);
+
+            this.authenticationService.httpGetRoles().subscribe(roles => {
+                this.authenticationService.setRoles(roles['userRoles']);
+            });
+        });
         this.path = this.location.path();
 
-        this.pathingService.httpGetVersions().subscribe(versions => {
-            this.pathingService.setVersions(versions);
-            this.pathingService.setActiveVersion({branchPath: 'MAIN'});
-        });
+        // this.pathingService.httpGetVersions().subscribe(versions => {
+        //     this.pathingService.setVersions(versions);
+        //     this.pathingService.setActiveVersion({branchPath: 'MAIN'});
+        // });
+
+        this.pathingService.setVersions([]);
+        this.pathingService.setActiveVersion({branchPath: 'MAIN'});
     }
 
     setVersion(version) {

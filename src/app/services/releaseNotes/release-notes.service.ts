@@ -61,8 +61,16 @@ export class ReleaseNotesService {
         return this.editMode.asObservable();
     }
 
+    httpPostSubject(subject) {
+        return this.http.post('/release-notes/MAIN/subjects', subject);
+    }
+
     httpGetSubjects() {
         return this.http.get('/release-notes/MAIN/subjects');
+    }
+
+    httpPostReleaseNote(lineitem) {
+        return this.http.post('/release-notes/MAIN/lineitems', lineitem);
     }
 
     httpGetReleaseNotes() {
@@ -71,5 +79,9 @@ export class ReleaseNotesService {
 
     httpPutReleaseNote(lineitem) {
         return this.http.put('/release-notes/MAIN/lineitems/' + lineitem.id, lineitem);
+    }
+
+    httpDeleteReleaseNote(lineitem) {
+        return this.http.delete('release-notes/MAIN/lineitems/' + lineitem.id);
     }
 }

@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
+import {ShowdownConverter} from 'ngx-showdown';
+import Quill from 'quill';
 
 @Component({
     selector: 'app-main-view',
@@ -24,10 +24,15 @@ export class MainViewComponent implements OnInit {
     releaseNotesSubscription: Subscription;
     user: any;
     userSubscription: Subscription;
+    roles: any;
+    rolesSubscription: Subscription;
     editedContent: any;
     editedContentSubscription: Subscription;
     editMode: any;
     editModeSubscription: Subscription;
+
+    converter = new ShowdownConverter();
+    quill: any;
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
@@ -38,6 +43,7 @@ export class MainViewComponent implements OnInit {
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
+        this.rolesSubscription = this.authenticationService.getRoles().subscribe(data => this.roles = data);
     }
 
     ngOnInit(): void {
@@ -52,6 +58,8 @@ export class MainViewComponent implements OnInit {
     }
 
     save(): void {
+        this.activeReleaseNote.content = this.quill.root.innerHTML;
+
         this.releaseNotesService.httpPutReleaseNote(this.activeReleaseNote).subscribe(data => {
             this.releaseNotesService.setEditedContent(false);
             this.toastr.success('Release Note: ' + data['title'], 'SAVED', this.toastrConfig);
@@ -67,22 +75,18 @@ export class MainViewComponent implements OnInit {
             this.editMode = false;
         } else {
             this.editMode = true;
+
+            setTimeout(() => {
+                this.quill = new Quill('#quill-editor', {theme: 'snow'});
+                this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
+            }, 100);
         }
     }
 
+    roleContains(role): boolean {
+        return !!this.roles.includes(role);
+    }
+
     public openPDF(): void {
-        const data = document.getElementById('pdf-view');
-
-        html2canvas(data).then(canvas => {
-
-            const fileWidth = 208;
-            const fileHeight = canvas.height * fileWidth / canvas.width;
-
-            const FILEURI = canvas.toDataURL('image/png');
-            const PDF = new jsPDF('p', 'mm', 'a4');
-            PDF.addImage(FILEURI, 'PNG', 0, 0, fileWidth, fileHeight);
-
-            PDF.save('angular-demo.pdf');
-        });
     }
 }
