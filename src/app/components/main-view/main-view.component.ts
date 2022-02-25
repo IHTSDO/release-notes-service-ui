@@ -73,13 +73,17 @@ export class MainViewComponent implements OnInit {
             this.editMode = true;
 
             setTimeout(() => {
-                this.quill = new Quill('#quill-editor', {theme: 'snow'});
-                this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
-                this.quill.on('text-change', () => {
-                    this.releaseNotesService.setEditedContent(true);
-                });
+                this.quillInit();
             }, 100);
         }
+    }
+
+    quillInit(): void {
+        this.quill = new Quill('#quill-editor', {theme: 'snow'});
+        this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
+        this.quill.on('text-change', () => {
+            this.releaseNotesService.setEditedContent(true);
+        });
     }
 
     roleContains(role): boolean {
