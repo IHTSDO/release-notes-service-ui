@@ -66,10 +66,6 @@ export class MainViewComponent implements OnInit {
         });
     }
 
-    setEditedContent(value: boolean): void {
-        this.releaseNotesService.setEditedContent(value);
-    }
-
     editToggle(): void {
         if (this.editMode) {
             this.editMode = false;
@@ -79,6 +75,9 @@ export class MainViewComponent implements OnInit {
             setTimeout(() => {
                 this.quill = new Quill('#quill-editor', {theme: 'snow'});
                 this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
+                this.quill.on('text-change', () => {
+                    this.releaseNotesService.setEditedContent(true);
+                });
             }, 100);
         }
     }
