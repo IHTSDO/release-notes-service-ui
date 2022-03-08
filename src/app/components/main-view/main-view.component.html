@@ -14,7 +14,9 @@
     <ng-container *ngIf="!editMode">
         <div class="p-5">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
-            <showdown [value]="activeReleaseNote?.content"></showdown>
+            <ng-container *ngIf="activeReleaseNote?.content">
+                <showdown [value]="activeReleaseNote?.content"></showdown>
+            </ng-container>
         </div>
     </ng-container>
     <ng-container *ngIf="editMode">
