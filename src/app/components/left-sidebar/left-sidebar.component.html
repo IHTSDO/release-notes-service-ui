@@ -39,9 +39,9 @@
     <div body>
         <div class="input-group mb-3">
             <span class="input-group-text"><h4 class="mb-0">Parent</h4></span>
-            <select class="form-select" [(ngModel)]="newNote.parentId">
-                <option [value]="undefined"></option>
-                <ng-container *ngFor="let note of releaseNotes | topLevel">
+            <select #inputSelect class="form-select">
+                <option [ngValue]="undefined"></option>
+                <ng-container *ngFor="let note of releaseNotes">
                     <option [value]="note.id">{{note.title}}</option>
                 </ng-container>
             </select>
@@ -53,7 +53,7 @@
     </div>
     <div footer>
         <button type="button" class="btn" (click)="closeModal('new-modal')">CANCEL</button>
-        <button type="button" class="btn accept ms-3" (click)="create(inputText.value); closeModal('new-modal')">CREATE</button>
+        <button type="button" class="btn accept ms-3" (click)="create(inputText.value, inputSelect.value); closeModal('new-modal')">CREATE</button>
     </div>
 </app-modal>
 

@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
 import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
+import {Note} from '../../models/note';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -18,8 +19,6 @@ export class LeftSidebarComponent implements OnInit {
 
     releaseNotes: any[];
     releaseNotesSubscription: Subscription;
-    subjects: any[];
-    subjectsSubscription: Subscription;
     activeReleaseNote: any;
     activeReleaseNoteSubscription: Subscription;
     editedContent: any;
@@ -28,7 +27,6 @@ export class LeftSidebarComponent implements OnInit {
     editModeSubscription: Subscription;
 
     lineItemTempStorage: any;
-    newNote = {parentId: '', level: '', subjectId: ''};
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private modalService: ModalService,
@@ -37,16 +35,11 @@ export class LeftSidebarComponent implements OnInit {
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
-        this.subjectsSubscription = this.releaseNotesService.getSubjects().subscribe( data => this.subjects = data);
     }
 
     ngOnInit() {
-        this.releaseNotesService.httpGetSubjects().subscribe(subjects => {
-            this.releaseNotesService.setSubjects(subjects);
-
-            this.releaseNotesService.httpGetReleaseNotes().subscribe(lineitems => {
-                this.releaseNotesService.setReleaseNotes(lineitems);
-            });
+        this.releaseNotesService.httpGetReleaseNotes().subscribe(lineitems => {
+            this.releaseNotesService.setReleaseNotes(lineitems);
         });
     }
 
@@ -75,28 +68,21 @@ export class LeftSidebarComponent implements OnInit {
         });
     }
 
-    create(text): void {
-        this.releaseNotesService.httpPostSubject({title: text}).subscribe(subjectData => {
+    create(text, parentId): void {
+        const newNote = new Note(text);
 
-            this.newNote.subjectId = subjectData['id'];
+        if (parentId) {
+            newNote.parentId = parentId;
+        }
 
-            if (this.newNote.parentId) {
-                this.newNote.level = '2';
-            } else {
-                delete this.newNote.parentId;
-                this.newNote.level = '1';
-            }
-
-            this.releaseNotesService.httpPostReleaseNote(this.newNote).subscribe(
-                success => {
-                    this.toastr.success(success['title'], 'CREATED', this.toastrConfig);
-                    this.refresh();
-                    this.newNote = {parentId: '', level: '', subjectId: ''};
-                },
-                error => {
-                    this.toastr.error('You do not have authorization to do this action', 'ERROR', this.toastrConfig);
-                });
-        });
+        this.releaseNotesService.httpPostReleaseNote(newNote).subscribe(
+            success => {
+                this.toastr.success(success['title'], 'CREATED', this.toastrConfig);
+                this.refresh();
+            },
+            error => {
+                this.toastr.error('You do not have authorization to do this action', 'ERROR', this.toastrConfig);
+            });
     }
 
     delete(override?: boolean): void {

@@ -8,7 +8,6 @@ import {HttpClient} from '@angular/common/http';
 export class ReleaseNotesService {
 
     private releaseNotes = new Subject<any>();
-    private subjects = new Subject<any>();
     private activeReleaseNote = new Subject<any>();
     private editedContent = new BehaviorSubject<any>(false);
     private editMode = new BehaviorSubject<any>(false);
@@ -23,15 +22,6 @@ export class ReleaseNotesService {
 
     getReleaseNotes() {
         return this.releaseNotes.asObservable();
-    }
-
-    // Setters & Getters: Subjects
-    setSubjects(subjects) {
-        this.subjects.next(subjects);
-    }
-
-    getSubjects() {
-        return this.subjects.asObservable();
     }
 
     // Setters & Getters: ActiveReleaseNote
@@ -59,14 +49,6 @@ export class ReleaseNotesService {
 
     getEditMode() {
         return this.editMode.asObservable();
-    }
-
-    httpPostSubject(subject) {
-        return this.http.post('/release-notes/MAIN/subjects', subject);
-    }
-
-    httpGetSubjects() {
-        return this.http.get('/release-notes/MAIN/subjects');
     }
 
     httpPostReleaseNote(lineitem) {
