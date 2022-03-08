@@ -14,7 +14,7 @@
             <button (click)="openModal('delete-modal'); lineItemTempStorage = parent; $event.stopPropagation()"><i class="fas fa-times"></i></button>
         </div>
         <ng-container *ngFor="let child of parent.children | textFilter:textFilter; let odd = odd">
-            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.title === activeReleaseNote?.title">
+            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.id === activeReleaseNote?.id">
                 {{child.title}}
                 <button (click)="openModal('delete-modal'); lineItemTempStorage = child; $event.stopPropagation()"><i class="fas fa-times"></i></button>
             </div>
