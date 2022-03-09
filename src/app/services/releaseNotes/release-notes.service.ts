@@ -64,6 +64,6 @@ export class ReleaseNotesService {
     }
 
     httpDeleteReleaseNote(lineitem) {
-        return this.http.delete('release-notes/MAIN/lineitems/' + lineitem.id);
+        return this.http.delete('/release-notes/MAIN/lineitems/' + lineitem.id);
     }
 }
