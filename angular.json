@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "release-notes-ui": {
+        "release-notes-service-ui": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -21,7 +21,7 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "baseHref": "/",
-                        "outputPath": "dist/release-notes-ui",
+                        "outputPath": "dist/release-notes-service-ui",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -80,19 +80,19 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "release-notes-ui:build",
+                        "browserTarget": "release-notes-service-ui:build",
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "release-notes-ui:build:production"
+                            "browserTarget": "release-notes-service-ui:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "release-notes-ui:build"
+                        "browserTarget": "release-notes-service-ui:build"
                     }
                 },
                 "lint": {
@@ -110,5 +110,5 @@
             }
         }
     },
-    "defaultProject": "release-notes-ui"
+    "defaultProject": "release-notes-service-ui"
 }
