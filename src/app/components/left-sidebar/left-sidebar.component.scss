@@ -7,54 +7,97 @@ nav#sidebar {
     background: $alto-white;
     overflow: auto;
 
-    h3 {
+    div.header {
         border-bottom: 1px $ghost-grey solid;
+        height: 4rem;
 
-        span {
-            font-size: 1.2rem;
-            color: $grey;
+        h3 {
+            span {
+                font-size: 1.2rem;
+                color: $grey;
+            }
+        }
+
+        div.button-container {
+            padding: 8px;
+
+            button {
+                height: 2.4rem;
+                width: 2.4rem;
+                color: $white;
+                font-size: 1.4rem;
+                padding-left: 9px;
+                display: flex;
+                justify-content: center;
+
+                &.new {
+                    background-color: lighten($fruit-salad, 10%);
+
+                    &:hover {
+                        background-color: $fruit-salad;
+                    }
+                }
+
+                &.pdf {
+                    background-color: lighten($wisteria, 10%);
+
+                    &:hover {
+                        background-color: $wisteria;
+                    }
+                }
+            }
         }
     }
 
-    input.searchbar {
-        font-size: 1.4rem;
-        background-color: lighten($alto-white, 10%);
-        width: 100%;
-        border-bottom: 1px $ghost-grey solid;
-        color: $bootstrap-black;
-        cursor: text;
-    }
-
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: $grey;
-        font-weight: 300;
-        opacity: 1; /* Firefox */
-    }
-
     div.line-item {
+        position: relative;
         font-size: 1.2rem;
         width: 100%;
         color: $bootstrap-black;
         cursor: pointer;
         border-bottom: 1px $ghost-grey solid;
 
-        &:hover {
-            background-color: darken($alto-white, 5%);
+        &.odd {
+            background-color: darken($alto-white, 2%);
         }
 
         &.top-level {
-            background-color: darken($alto-white, 10%);
+            background-color: lighten($slate-grey, 25%);
 
             &:hover {
-                background-color: darken($alto-white, 10%);
+                background-color: lighten($slate-grey, 20%);
             }
         }
+
+        &:hover {
+            background-color: darken($alto-white, 5%);
+
+            & > button {
+                display: block;
+            }
+        }
+
+
 
         &.active {
             background-color: $anakiwa;
 
             &:hover {
                 background-color: darken($anakiwa, 5%);
+            }
+        }
+
+        button {
+            display: none;
+            position: absolute;
+            background-color: transparent;
+            font-size: 1.4rem;
+            top: 0.3rem;
+            right: 0.3rem;
+            color: $mandy;
+
+            &:hover {
+                color: darken($mandy, 10%);
             }
         }
     }

@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-dark bg-dark p-2 pe-2">
     <a class="logo" routerLink="/">
-        <img class="logo me-2 p-0" src="/assets/small_logo.png">
+        <img class="logo me-2 p-0" src="/release-notes-management/assets/small_logo.png">
         <span class="title text-ghost-grey">SNOMED CT Release Notes Management Service</span>
     </a>
 
@@ -37,6 +37,9 @@
     </ng-container>
 
     <div *ngIf="user" class="float-right mx-3">
+<!--        <div class="search d-inline-block m-2">-->
+<!--            <input class="form-control" type="search" placeholder="Search...">-->
+<!--        </div>-->
         <div class="logout d-inline-block m-2" (click)="logout()">
             <span class="px-2 text-ghost-grey">Logout</span>
         </div>

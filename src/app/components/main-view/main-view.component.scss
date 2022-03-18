@@ -1,12 +1,21 @@
 @import '~src/variables.scss';
 
-div#main-view {
+
+
+div#main-view, div#all-view {
     margin-left: 32rem;
     position: relative;
     height: calc(100vh - 9rem);
+    background-color: $white;
+    overflow: scroll;
 
     div.quill-container {
-        min-height: 80vh;
+        max-height: 80vh;
+
+        quill-editor {
+
+
+        }
     }
 
     h1 {
@@ -21,8 +30,32 @@ div#main-view {
 
     button {
         position: absolute;
-        right: 1rem;
-        bottom: 1rem;
-        background-color: $fruit-salad;
+        height: 3.2rem;
+        width: 3.2rem;
+        color: $white;
+
+        &.save {
+            background-color: $fruit-salad;
+            right: 6rem;
+            top: 2rem;
+            padding-left: 9px;
+
+            &:hover {
+                background-color: darken($fruit-salad, 10%);
+            }
+        }
+
+        &.edit-toggle {
+            background-color: $sea-buckthorn;
+            right: 2rem;
+            top: 2rem;
+            padding-left: 8px;
+
+            &:hover {
+                background-color: darken($sea-buckthorn, 10%);
+            }
+        }
     }
 }
+
+
