@@ -21,7 +21,6 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "baseHref": "/",
-                        "aot": true,
                         "outputPath": "dist/release-notes-ui",
                         "index": "src/index.html",
                         "main": "src/main.ts",
