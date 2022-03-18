@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>release-notes-service-ui</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <properties>
         <packageName>${project.artifactId}</packageName>
     </properties>
@@ -29,7 +29,7 @@
                             <signPackage>false</signPackage>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/dist/release-notes-ui</src>
+                                    <src>${basedir}/dist/release-notes-service-ui</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
