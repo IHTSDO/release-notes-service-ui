@@ -9,7 +9,7 @@
 
 <div id="main-view" *ngIf="activeReleaseNote">
     <button *ngIf="editedContent" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
-    <button *ngIf="roleContains('RELEASE_LEAD')" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
+    <button *ngIf="roleContains('PROJECT_MANAGER')" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
 
     <ng-container *ngIf="!editMode">
         <div class="p-5">
