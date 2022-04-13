@@ -33,6 +33,11 @@ export class MainViewComponent implements OnInit {
 
     converter = new ShowdownConverter();
     quill: any;
+    toolbarOptions = [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'link'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['clean']];
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
@@ -79,7 +84,7 @@ export class MainViewComponent implements OnInit {
     }
 
     quillInit(): void {
-        this.quill = new Quill('#quill-editor', {theme: 'snow'});
+        this.quill = new Quill('#quill-editor', { modules: { toolbar: this.toolbarOptions }, theme: 'snow'});
         this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
         this.quill.on('text-change', () => {
             this.releaseNotesService.setEditedContent(true);
