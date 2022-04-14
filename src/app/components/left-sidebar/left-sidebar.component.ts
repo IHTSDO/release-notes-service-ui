@@ -4,6 +4,7 @@ import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.ser
 import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
 import {Note} from '../../models/note';
+import {AuthenticationService} from '../../services/authentication/authentication.service';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -25,16 +26,20 @@ export class LeftSidebarComponent implements OnInit {
     editedContentSubscription: Subscription;
     editMode: any;
     editModeSubscription: Subscription;
+    roles: any;
+    rolesSubscription: Subscription;
 
     lineItemTempStorage: any;
 
     constructor(private releaseNotesService: ReleaseNotesService,
                 private modalService: ModalService,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private authenticationService: AuthenticationService) {
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
+        this.rolesSubscription = this.authenticationService.getRoles().subscribe(data => this.roles = data);
     }
 
     ngOnInit() {
@@ -115,6 +120,10 @@ export class LeftSidebarComponent implements OnInit {
                 this.releaseNotesService.setActiveReleaseNote(lineitem);
             }
         }
+    }
+
+    roleContains(role): boolean {
+        return !!this.roles.includes(role);
     }
 
     downloadPDF(): void {
