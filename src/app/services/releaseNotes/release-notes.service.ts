@@ -10,6 +10,7 @@ export class ReleaseNotesService {
     private releaseNotes = new Subject<any>();
     private activeReleaseNote = new Subject<any>();
     private editedContent = new BehaviorSubject<any>(false);
+    private content = new Subject<any>();
     private editMode = new BehaviorSubject<any>(false);
 
     constructor(private http: HttpClient) {
@@ -40,6 +41,15 @@ export class ReleaseNotesService {
 
     getEditedContent() {
         return this.editedContent.asObservable();
+    }
+
+    // Setters & Getters: Content
+    setContent(content) {
+        this.content.next(content);
+    }
+
+    getContent() {
+        return this.content.asObservable();
     }
 
     // Setters & Getters: EditMode
