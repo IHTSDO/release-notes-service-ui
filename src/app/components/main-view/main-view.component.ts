@@ -73,7 +73,11 @@ export class MainViewComponent implements OnInit {
 
     editToggle(): void {
         if (this.editMode) {
-            this.editMode = false;
+            if (this.editedContent) {
+                this.openModal('changes-modal');
+            } else {
+                this.editMode = false;
+            }
         } else {
             this.editMode = true;
 
@@ -88,6 +92,7 @@ export class MainViewComponent implements OnInit {
         this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
         this.quill.on('text-change', () => {
             this.releaseNotesService.setEditedContent(true);
+            this.releaseNotesService.setContent(this.quill.root.innerHTML);
         });
     }
 

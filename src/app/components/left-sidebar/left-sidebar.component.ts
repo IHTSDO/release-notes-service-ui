@@ -28,6 +28,8 @@ export class LeftSidebarComponent implements OnInit {
     editModeSubscription: Subscription;
     roles: any;
     rolesSubscription: Subscription;
+    content: any;
+    contentSubscription: Subscription;
 
     lineItemTempStorage: any;
 
@@ -36,10 +38,11 @@ export class LeftSidebarComponent implements OnInit {
                 private toastr: ToastrService,
                 private authenticationService: AuthenticationService) {
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
-        this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
+        this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => {this.activeReleaseNote = data; this.lineItemTempStorage = undefined; });
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.rolesSubscription = this.authenticationService.getRoles().subscribe(data => this.roles = data);
+        this.contentSubscription = this.releaseNotesService.getContent().subscribe(data => this.content = data);
     }
 
     ngOnInit() {
@@ -57,9 +60,16 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     save(): void {
+        this.activeReleaseNote.content = this.content;
         this.releaseNotesService.httpPutReleaseNote(this.activeReleaseNote).subscribe(data => {
             this.releaseNotesService.setEditedContent(false);
-            this.releaseNotesService.setActiveReleaseNote(this.lineItemTempStorage);
+            if (this.lineItemTempStorage) {
+                this.releaseNotesService.setEditMode(false);
+                this.releaseNotesService.setActiveReleaseNote(this.lineItemTempStorage);
+            }
+            this.releaseNotesService.httpGetReleaseNotes().subscribe(releaseNotes => {
+                this.releaseNotesService.setReleaseNotes(releaseNotes);
+            });
             this.toastr.success('Release Note: ' + data['title'], 'SAVED', this.toastrConfig);
         });
     }
@@ -68,7 +78,9 @@ export class LeftSidebarComponent implements OnInit {
         this.releaseNotesService.setEditedContent(false);
         this.releaseNotesService.httpGetReleaseNotes().subscribe(data => {
             this.releaseNotesService.setReleaseNotes(data);
-            this.releaseNotesService.setActiveReleaseNote(this.lineItemTempStorage);
+            if (this.lineItemTempStorage) {
+                this.releaseNotesService.setActiveReleaseNote(this.lineItemTempStorage);
+            }
             this.releaseNotesService.setEditMode(false);
         });
     }
