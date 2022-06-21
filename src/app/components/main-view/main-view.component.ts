@@ -39,6 +39,7 @@ export class MainViewComponent implements OnInit {
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         ['clean']];
 
+
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
                 private modalService: ModalService,
@@ -63,8 +64,12 @@ export class MainViewComponent implements OnInit {
     }
 
     save(): void {
-        this.activeReleaseNote.content = this.quill.root.innerHTML;
-
+        let content = this.quill.root.innerHTML;
+        content = this.converter.makeMarkdown(content);
+        let div = document.createElement("div");
+        div.innerHTML = content;
+        let text = div.textContent || div.innerText || "";
+        this.activeReleaseNote.content = text;
         this.releaseNotesService.httpPutReleaseNote(this.activeReleaseNote).subscribe(data => {
             this.releaseNotesService.setEditedContent(false);
             this.toastr.success('Release Note: ' + data['title'], 'SAVED', this.toastrConfig);
@@ -89,7 +94,9 @@ export class MainViewComponent implements OnInit {
 
     quillInit(): void {
         this.quill = new Quill('#quill-editor', { modules: { toolbar: this.toolbarOptions }, theme: 'snow'});
-        this.quill.clipboard.dangerouslyPasteHTML(this.converter.makeHtml(this.activeReleaseNote.content));
+        let html = this.converter.makeHtml(this.activeReleaseNote.content);
+        let content = html.endsWith('\n<p><br></p>') ? html + '\n<p><br></p>' : html;
+        this.quill.clipboard.dangerouslyPasteHTML(content);
         this.quill.on('text-change', () => {
             this.releaseNotesService.setEditedContent(true);
             this.releaseNotesService.setContent(this.quill.root.innerHTML);
