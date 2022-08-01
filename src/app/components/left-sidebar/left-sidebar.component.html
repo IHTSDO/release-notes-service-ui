@@ -5,7 +5,7 @@
         </div>
         <div class="col button-container">
             <button class="float-end btn new rounded-circle ms-3" (click)="openModal('new-modal'); inputText.value = ''" [title]="'New Release Note'"><i class="fas fa-plus"></i></button>
-<!--            <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>-->
+            <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>
         </div>
     </div>
     <ng-container *ngFor="let parent of releaseNotes">

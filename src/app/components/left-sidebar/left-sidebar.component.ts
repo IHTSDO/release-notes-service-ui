@@ -135,11 +135,13 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     roleContains(role): boolean {
-        return !!this.roles.includes(role);
+        if (this.roles) {
+            return !!this.roles.includes(role);
+        }
     }
 
     downloadPDF(): void {
-
+        this.releaseNotesService.httpDownloadPDF().subscribe();
     }
 
     cloneObject(object): any {

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -75,5 +75,11 @@ export class ReleaseNotesService {
 
     httpDeleteReleaseNote(lineitem) {
         return this.http.delete('/release-notes/MAIN/lineitems/' + lineitem.id);
+    }
+
+    httpDownloadPDF() {
+        let headers = new HttpHeaders();
+        headers = headers.set('Accept', 'application/pdf');
+        return this.http.get('/release-notes/MAIN/lineitems/pdf', { headers: headers, responseType: 'blob' });
     }
 }

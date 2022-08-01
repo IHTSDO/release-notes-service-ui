@@ -104,7 +104,9 @@ export class MainViewComponent implements OnInit {
     }
 
     roleContains(role): boolean {
-        return !!this.roles.includes(role);
+        if (this.roles) {
+            return !!this.roles.includes(role);
+        }
     }
 
     public openPDF(): void {
