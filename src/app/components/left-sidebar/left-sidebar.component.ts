@@ -141,7 +141,7 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     downloadPDF(): void {
-        this.releaseNotesService.httpDownloadPDF().subscribe();
+        this.releaseNotesService.httpDownloadPDF();
     }
 
     cloneObject(object): any {

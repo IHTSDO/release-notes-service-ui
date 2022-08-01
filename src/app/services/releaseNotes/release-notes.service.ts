@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
+declare var require: any
+const FileSaver = require('file-saver');
 
 @Injectable({
     providedIn: 'root'
@@ -78,8 +80,6 @@ export class ReleaseNotesService {
     }
 
     httpDownloadPDF() {
-        let headers = new HttpHeaders();
-        headers = headers.set('Accept', 'application/pdf');
-        return this.http.get('/release-notes/MAIN/lineitems/pdf', { headers: headers, responseType: 'blob' });
+        FileSaver.saveAs('/release-notes/MAIN/lineitems/pdf', 'Release Notes');
     }
 }

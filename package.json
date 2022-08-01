@@ -38,6 +38,7 @@
         "ajv": "^6.12.2",
         "bootstrap": "^5.1.1",
         "core-js": "^3.6.5",
+        "file-saver": "^2.0.5",
         "guid-typescript": "^1.0.9",
         "jquery": "^3.5.1",
         "ngx-showdown": "^6.0.0",
