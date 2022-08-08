@@ -95,7 +95,7 @@ export class MainViewComponent implements OnInit {
     quillInit(): void {
         this.quill = new Quill('#quill-editor', { modules: { toolbar: this.toolbarOptions }, theme: 'snow'});
         let html = this.converter.makeHtml(this.activeReleaseNote.content);
-        let content = html.endsWith('\n<p><br></p>') ? html + '\n<p><br></p>' : html;
+        let content = html?.endsWith('\n<p><br></p>') ? html + '\n<p><br></p>' : html;
         this.quill.clipboard.dangerouslyPasteHTML(content);
         this.quill.on('text-change', () => {
             this.releaseNotesService.setEditedContent(true);
