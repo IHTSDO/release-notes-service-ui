@@ -65,11 +65,7 @@ export class MainViewComponent implements OnInit {
 
     save(): void {
         let content = this.quill.root.innerHTML;
-        content = this.converter.makeMarkdown(content);
-        let div = document.createElement("div");
-        div.innerHTML = content;
-        let text = div.textContent || div.innerText || "";
-        this.activeReleaseNote.content = text;
+        this.activeReleaseNote.content = this.converter.makeMarkdown(content);
         this.releaseNotesService.httpPutReleaseNote(this.activeReleaseNote).subscribe(data => {
             this.releaseNotesService.setEditedContent(false);
             this.toastr.success('Release Note: ' + data['title'], 'SAVED', this.toastrConfig);
