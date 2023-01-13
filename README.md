@@ -1,48 +1,22 @@
-# Release Notes UI
+# Release Notes UI by SNOMED International
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+![Last Commit](https://img.shields.io/github/last-commit/ihtsdo/release-notes-ui/develop)
+![Issues](https://img.shields.io/github/issues/ihtsdo/release-notes-ui)
+![Contributors](https://img.shields.io/github/contributors/ihtsdo/release-notes-ui)
 
-## Development server
+![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/m/ihtsdo/release-notes-ui/develop)
+![Angular Version](https://img.shields.io/github/package-json/dependency-version/ihtsdo/release-notes-ui/@angular/core)
+![Typescript Version](https://img.shields.io/github/package-json/dependency-version/ihtsdo/release-notes-ui/dev/typescript)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The release notes tool is used in conjunction with the Authoring UI in order to capture release notes at the point of editing.
 
-## Additional Configuration
+---
 
-In order to obtain api-endpoint information within the local environment and avoid CORS errors when accessing SNOWSTORM and IMS endpoints a configuration similar to the following (very basic) should be used - 4200 is the default serve port for Angular CLI:
+## Development Server
 
-```
-server {
-        listen      8090;
-        server_name localhost.ihtsdotools.org;
-        location / {
-            proxy_pass http://127.0.0.1:4200;
-        }
-        location /browser {
-           proxy_pass https://dev-browser.ihtsdotools.org/snowstorm/snomed-ct;
-        }
-        location /snowstorm {
-           proxy_pass https://dev-browser.ihtsdotools.org/snowstorm;
-        }
-        location /auth {
-            proxy_pass https://dev-ims.ihtsdotools.org/api/account;
-            proxy_set_header Accept "application/json";
-        }
-    }
-```
-Using local.ihtsdotools validates the IMS SSO cookie against the subdomain.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via Jest.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
