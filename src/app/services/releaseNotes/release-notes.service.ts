@@ -79,6 +79,10 @@ export class ReleaseNotesService {
         return this.http.delete('/release-notes/MAIN/lineitems/' + lineitem.id);
     }
 
+    httpVersionReleaseNotes(data) {
+        return this.http.post('/release-notes/MAIN/lineitems/version', data);
+    }
+
     httpDownloadPDF() {
         FileSaver.saveAs('/release-notes/MAIN/lineitems/pdf', 'Release Notes');
     }

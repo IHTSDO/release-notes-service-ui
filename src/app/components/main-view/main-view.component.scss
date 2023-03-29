@@ -1,22 +1,11 @@
 @import '~src/variables.scss';
 
-
-
 div#main-view, div#all-view {
     margin-left: 32rem;
     position: relative;
     height: calc(100vh - 9rem);
     background-color: $white;
     overflow: scroll;
-
-    div.quill-container {
-        max-height: 80vh;
-
-        quill-editor {
-
-
-        }
-    }
 
     h1 {
         font-weight: 300;
@@ -29,12 +18,11 @@ div#main-view, div#all-view {
     }
 
     button {
-        position: absolute;
-        height: 3.2rem;
-        width: 3.2rem;
-        color: $white;
-
         &.save {
+            position: absolute;
+            height: 3.2rem;
+            width: 3.2rem;
+            color: $white;
             background-color: $fruit-salad;
             right: 6rem;
             top: 2rem;
@@ -46,6 +34,10 @@ div#main-view, div#all-view {
         }
 
         &.edit-toggle {
+            position: absolute;
+            height: 3.2rem;
+            width: 3.2rem;
+            color: $white;
             background-color: $sea-buckthorn;
             right: 2rem;
             top: 2rem;
@@ -55,7 +47,29 @@ div#main-view, div#all-view {
                 background-color: darken($sea-buckthorn, 10%);
             }
         }
+
+        &.version {
+            position: fixed;
+            height: 3.2rem;
+            color: $white;
+            background-color: $wisteria;
+            bottom: 6rem;
+            right: 2rem;
+            padding-left: 8px;
+
+            &:hover {
+                background-color: darken($wisteria, 10%);
+            }
+        }
     }
 }
 
+app-modal#version-modal {
+    p {
+        font-size: 1.4rem;
+    }
 
+    span {
+        font-size: 1.4rem;
+    }
+}
