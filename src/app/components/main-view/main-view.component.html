@@ -5,12 +5,12 @@
             <showdown [value]="note?.content"></showdown>
         </div>
     </ng-container>
-    <button *ngIf="roleContains('PROJECT_MANAGER')" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
 </div>
 
 <div id="main-view" *ngIf="activeReleaseNote">
-    <button *ngIf="editedContent" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
-    <button *ngIf="roleContains('PROJECT_MANAGER')" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
+    <button *ngIf="editedContent && activeVersion === 'MAIN'" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
 
     <ng-container *ngIf="!editMode">
         <div class="p-5">
@@ -26,7 +26,7 @@
             <div id="quill-editor"></div>
         </div>
     </ng-container>
-    <button *ngIf="roleContains('PROJECT_MANAGER')" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
 </div>
 
 <app-modal id="pdf-modal" class="modal" [size]="'xl'">
