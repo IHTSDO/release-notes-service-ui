@@ -11,7 +11,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item ps-3" (click)="setActiveVersion('MAIN')">MAIN</a>
-                <a *ngFor="let version of versions" class="dropdown-item ps-3" (click)="setActiveVersion(version)">{{version}}</a>
+                <a *ngFor="let version of versions | reverseAlphabetical" class="dropdown-item ps-3" (click)="setActiveVersion(version)">{{version}}</a>
             </div>
         </li>
     </ul>
