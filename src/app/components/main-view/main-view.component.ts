@@ -50,8 +50,9 @@ export class MainViewComponent implements OnInit {
             this.activeVersion = data;
             this.releaseNotesService.httpGetReleaseNotes().subscribe(notes => {
                 this.releaseNotesService.setReleaseNotes(notes);
+                this.releaseNotesService.setActiveReleaseNote(null);
             });
-        })
+        });
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
