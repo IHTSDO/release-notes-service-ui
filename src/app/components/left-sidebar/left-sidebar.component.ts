@@ -18,6 +18,8 @@ export class LeftSidebarComponent implements OnInit {
         closeButton: true
     };
 
+    activeVersion: any;
+    activeVersionSubscription: Subscription;
     releaseNotes: any[];
     releaseNotesSubscription: Subscription;
     activeReleaseNote: any;
@@ -37,6 +39,7 @@ export class LeftSidebarComponent implements OnInit {
                 private modalService: ModalService,
                 private toastr: ToastrService,
                 private authenticationService: AuthenticationService) {
+        this.activeVersionSubscription = this. releaseNotesService.getActiveVersion().subscribe(data => this.activeVersion = data);
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => {this.activeReleaseNote = data; this.lineItemTempStorage = undefined; });
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);

@@ -5,18 +5,18 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ReverseAlphabeticalPipe implements PipeTransform {
 
-    transform(items: any[], key): any {
+    transform(items: any[]): any {
         if (!items) {
             return [];
         }
 
         items = items.sort(function (a, b) {
-            if (a[key] > b[key]) {
-                return -1;
+            if (a < b) {
+                return 1;
             }
 
-            if (a[key] < b[key]) {
-                return 1;
+            if (a > b) {
+                return -1;
             }
         });
 

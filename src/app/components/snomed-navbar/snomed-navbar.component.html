@@ -7,11 +7,11 @@
     <ul *ngIf="versions; else loading" class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
             <a class="nav-link px-3 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{activeVersion?.branchPath}}
+                {{activeVersion}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item ps-3" (click)="setVersion({branchPath: 'MAIN'})">MAIN</a>
-                <a *ngFor="let version of versions | reverseAlphabetical:'branchPath'" class="dropdown-item ps-3" (click)="setVersion(version)">{{version?.branchPath}}</a>
+                <a class="dropdown-item ps-3" (click)="setActiveVersion('MAIN')">MAIN</a>
+                <a *ngFor="let version of versions | reverseAlphabetical" class="dropdown-item ps-3" (click)="setActiveVersion(version)">{{version}}</a>
             </div>
         </li>
     </ul>

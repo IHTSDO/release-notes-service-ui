@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {Location} from '@angular/common';
+import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -23,11 +24,11 @@ export class SnomedNavbarComponent implements OnInit {
     activeVersion: any;
     activeVersionSubscription: Subscription;
 
-    constructor(private authenticationService: AuthenticationService, private pathingService: PathingService, private location: Location) {
+    constructor(private authenticationService: AuthenticationService, private pathingService: PathingService, private releaseNotesService: ReleaseNotesService, private location: Location) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
-        this.versionsSubscription = this.pathingService.getVersions().subscribe(data => this.versions = data);
-        this.activeVersionSubscription = this.pathingService.getActiveVersion().subscribe(data => this.activeVersion = data);
+        this.versionsSubscription = this.releaseNotesService.getVersions().subscribe(data => this.versions = data);
+        this.activeVersionSubscription = this.releaseNotesService.getActiveVersion().subscribe(data => this.activeVersion = data);
     }
 
     ngOnInit() {
@@ -45,12 +46,16 @@ export class SnomedNavbarComponent implements OnInit {
         //     this.pathingService.setActiveVersion({branchPath: 'MAIN'});
         // });
 
-        this.pathingService.setVersions([]);
-        this.pathingService.setActiveVersion({branchPath: 'MAIN'});
+        // this.pathingService.setVersions([]);
+
+        this.releaseNotesService.httpGetVersions().subscribe(versions => {
+            this.releaseNotesService.setVersions(versions);
+        });
+        this.pathingService.setActiveVersion('MAIN');
     }
 
-    setVersion(version) {
-        this.pathingService.setActiveVersion(version);
+    setActiveVersion(version) {
+        this.releaseNotesService.setActiveVersion(version);
     }
 
     logout() {

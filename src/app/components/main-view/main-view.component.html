@@ -5,11 +5,12 @@
             <showdown [value]="note?.content"></showdown>
         </div>
     </ng-container>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
 </div>
 
 <div id="main-view" *ngIf="activeReleaseNote">
-    <button *ngIf="editedContent" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
-    <button *ngIf="roleContains('PROJECT_MANAGER')" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
+    <button *ngIf="editedContent && activeVersion === 'MAIN'" class="btn save rounded-circle" (click)="save()" [title]="'Save'"><i class="fas fa-save"></i></button>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn edit-toggle rounded-circle" (click)="editToggle()" [title]="'Edit Toggle'"><i class="fas fa-pencil-ruler"></i></button>
 
     <ng-container *ngIf="!editMode">
         <div class="p-5">
@@ -25,6 +26,7 @@
             <div id="quill-editor"></div>
         </div>
     </ng-container>
+    <button *ngIf="roleContains('PROJECT_MANAGER') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
 </div>
 
 <app-modal id="pdf-modal" class="modal" [size]="'xl'">
@@ -39,5 +41,20 @@
     </div>
     <div footer>
         <button type="button" class="btn accept" (click)="openPDF(); closeModal('pdf-modal')">Download PDF</button>
+    </div>
+</app-modal>
+
+<app-modal id="version-modal" class="modal" [size]="'l'">
+    <div header><h3 class="mb-0">Publish Release Notes<span class="px-2"></span></h3></div>
+    <div body>
+        <p class="p-3">Please enter the effective time to be associated with these release notes.</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Effective Time</span>
+            <input #effectiveTime type="text" class="form-control" placeholder="eg. 2023-01-31">
+        </div>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('version-modal')">CANCEL</button>
+        <button type="button" class="btn accept" (click)="versionReleaseNotes(effectiveTime.value); closeModal('version-modal')">VERSION</button>
     </div>
 </app-modal>

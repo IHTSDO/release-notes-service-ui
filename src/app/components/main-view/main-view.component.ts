@@ -18,6 +18,8 @@ export class MainViewComponent implements OnInit {
         closeButton: true
     };
 
+    activeVersion: any;
+    activeVersionSubscription: Subscription;
     activeReleaseNote: any;
     activeReleaseNoteSubscription: Subscription;
     releaseNotes: any[];
@@ -44,6 +46,13 @@ export class MainViewComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private modalService: ModalService,
                 private toastr: ToastrService) {
+        this.activeVersionSubscription = this.releaseNotesService.getActiveVersion().subscribe(data => {
+            this.activeVersion = data;
+            this.releaseNotesService.httpGetReleaseNotes().subscribe(notes => {
+                this.releaseNotesService.setReleaseNotes(notes);
+                this.releaseNotesService.setActiveReleaseNote(null);
+            });
+        });
         this.activeReleaseNoteSubscription = this.releaseNotesService.getActiveReleaseNote().subscribe( data => this.activeReleaseNote = data);
         this.releaseNotesSubscription = this.releaseNotesService.getReleaseNotes().subscribe( data => this.releaseNotes = data);
         this.editedContentSubscription = this.releaseNotesService.getEditedContent().subscribe(data => this.editedContent = data);
@@ -106,5 +115,13 @@ export class MainViewComponent implements OnInit {
     }
 
     public openPDF(): void {
+    }
+
+    versionReleaseNotes(effectiveTime: string): void {
+        this.releaseNotesService.httpVersionReleaseNotes({effectiveTime: effectiveTime}).subscribe(data => {
+            this.toastr.success('Release notes successfully versioned', 'SUCCESS');
+        }, error => {
+            this.toastr.error('Release notes failed to version', 'FAILURE');
+        });
     }
 }
