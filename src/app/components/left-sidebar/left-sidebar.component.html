@@ -4,21 +4,21 @@
             <h3 class="p-3 mb-0">Release Notes</h3>
         </div>
         <div class="col button-container">
-            <button *ngIf="activeVersion === 'MAIN'" class="float-end btn new rounded-circle ms-3" (click)="openModal('new-modal'); inputText.value = ''" [title]="'New Release Note'"><i class="fas fa-plus"></i></button>
+            <button *ngIf="roleContains('AUTHOR') && activeVersion === 'MAIN'" class="float-end btn new rounded-circle ms-3" (click)="openModal('new-modal'); inputText.value = ''" [title]="'New Release Note'"><i class="fas fa-plus"></i></button>
             <button class="float-end btn pdf rounded-circle" (click)="downloadPDF()" [title]="'Download PDF'"><i class="fas fa-file-download"></i></button>
         </div>
     </div>
     <ng-container *ngFor="let parent of releaseNotes">
         <div class="line-item top-level py-2 px-3">
             {{parent.title}}
-            <ng-container *ngIf="roleContains('PROJECT_MANAGER')">
+            <ng-container *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'">
                 <button (click)="openModal('delete-modal'); lineItemTempStorage = parent; $event.stopPropagation()"><i class="fas fa-times"></i></button>
             </ng-container>
         </div>
         <ng-container *ngFor="let child of parent.children | textFilter:textFilter | alphabetical:'title'; let odd = odd">
             <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.id === activeReleaseNote?.id">
                 {{child.title}}
-                <ng-container *ngIf="roleContains('PROJECT_MANAGER')">
+                <ng-container *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'">
                     <button (click)="openModal('delete-modal'); lineItemTempStorage = child; $event.stopPropagation()"><i class="fas fa-times"></i></button>
                 </ng-container>
             </div>
