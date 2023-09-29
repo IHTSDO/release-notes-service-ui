@@ -47,18 +47,6 @@
                     "configurations": {
                         "production": {
                             "baseHref": "/release-notes-management/",
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "1mb",
-                                    "maximumError": "2mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "16kb",
-                                    "maximumError": "32kb"
-                                }
-                            ],
                             "outputHashing": "all"
                         },
                         "development": {
