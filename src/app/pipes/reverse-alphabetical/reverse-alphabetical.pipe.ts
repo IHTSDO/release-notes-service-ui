@@ -18,6 +18,8 @@ export class ReverseAlphabeticalPipe implements PipeTransform {
             if (a > b) {
                 return -1;
             }
+
+            return null;
         });
 
         return items;

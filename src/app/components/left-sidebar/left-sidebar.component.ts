@@ -140,6 +140,8 @@ export class LeftSidebarComponent implements OnInit {
     roleContains(role): boolean {
         if (this.roles) {
             return !!this.roles.includes(role);
+        } else {
+            return null;
         }
     }
 

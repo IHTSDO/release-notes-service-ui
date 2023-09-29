@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
@@ -32,9 +32,9 @@ import {LeftSidebarComponent} from './components/left-sidebar/left-sidebar.compo
 import {ReleaseNotesService} from './services/releaseNotes/release-notes.service';
 import {TextFilterPipe} from './pipes/text-filter/text-filter.pipe';
 import { MainViewComponent } from './components/main-view/main-view.component';
-import {ShowdownModule} from 'ngx-showdown';
 import {ModalComponent} from './components/modal/modal.component';
 import { TopLevelPipe } from './pipes/top-level/top-level.pipe';
+import {MarkdownModule} from "ngx-markdown";
 
 // SERVICE IMPORTS
 
@@ -62,7 +62,7 @@ import { TopLevelPipe } from './pipes/top-level/top-level.pipe';
         NgbTypeaheadModule,
         AppRoutingModule,
         ToastrModule.forRoot(),
-        ShowdownModule
+        MarkdownModule.forRoot({ loader: HttpClient })
     ],
     providers: [
         AuthenticationService,

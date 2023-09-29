@@ -4,8 +4,9 @@ import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.ser
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
-import {ShowdownConverter} from 'ngx-showdown';
+import {MarkdownService} from "ngx-markdown";
 import Quill from 'quill';
+import TurndownService from 'turndown';
 
 @Component({
     selector: 'app-main-view',
@@ -33,8 +34,8 @@ export class MainViewComponent implements OnInit {
     editMode: any;
     editModeSubscription: Subscription;
 
-    converter = new ShowdownConverter();
     quill: any;
+    turndown: any;
     toolbarOptions = [
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
         ['bold', 'italic', 'link'],
@@ -45,7 +46,8 @@ export class MainViewComponent implements OnInit {
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
                 private modalService: ModalService,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private markdownService: MarkdownService) {
         this.activeVersionSubscription = this.releaseNotesService.getActiveVersion().subscribe(data => {
             this.activeVersion = data;
             this.releaseNotesService.httpGetReleaseNotes().subscribe(notes => {
@@ -74,7 +76,12 @@ export class MainViewComponent implements OnInit {
 
     save(): void {
         let content = this.quill.root.innerHTML;
-        this.activeReleaseNote.content = this.converter.makeMarkdown(content);
+        // this.activeReleaseNote.content = this.markdownService.parse(content);
+
+        const turndownService = new TurndownService();
+
+        this.activeReleaseNote.content = turndownService.turndown(content);
+
         this.releaseNotesService.httpPutReleaseNote(this.activeReleaseNote).subscribe(data => {
             this.releaseNotesService.setEditedContent(false);
             this.toastr.success('Release Note: ' + data['title'], 'SAVED', this.toastrConfig);
@@ -99,9 +106,11 @@ export class MainViewComponent implements OnInit {
 
     quillInit(): void {
         this.quill = new Quill('#quill-editor', { modules: { toolbar: this.toolbarOptions }, theme: 'snow'});
-        let html = this.converter.makeHtml(this.activeReleaseNote.content);
-        let content = html?.endsWith('\n<p><br></p>') ? html + '\n<p><br></p>' : html;
-        this.quill.clipboard.dangerouslyPasteHTML(content);
+
+        let html = this.markdownService.parse(this.activeReleaseNote.content);
+        // let content = html?.endsWith('\n<p><br></p>') ? html + '\n<p><br></p>' : html;
+        // this.quill.clipboard.dangerouslyPasteHTML(content);
+        this.quill.clipboard.dangerouslyPasteHTML(html);
         this.quill.on('text-change', () => {
             this.releaseNotesService.setEditedContent(true);
             this.releaseNotesService.setContent(this.quill.root.innerHTML);
@@ -111,6 +120,8 @@ export class MainViewComponent implements OnInit {
     roleContains(role): boolean {
         if (this.roles) {
             return !!this.roles.includes(role);
+        } else {
+            return null;
         }
     }
 

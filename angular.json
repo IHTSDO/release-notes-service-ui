@@ -1,32 +1,27 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "cli": {
-        "analytics": false,
-        "defaultCollection": "@angular-eslint/schematics"
-    },
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
         "release-notes-service-ui": {
-            "root": "",
-            "sourceRoot": "src",
             "projectType": "application",
-            "prefix": "app",
             "schematics": {
                 "@schematics/angular:component": {
                     "style": "scss"
                 }
             },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "baseHref": "/",
                         "outputPath": "dist/release-notes-service-ui",
                         "index": "src/index.html",
                         "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.app.json",
+                        "tsConfig": "tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
                             "src/favicon_grey.ico",
@@ -45,61 +40,60 @@
                             "./node_modules/jquery/dist/jquery.min.js",
                             "./node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "./node_modules/quill/dist/quill.min.js"
-                        ],
-                        "allowedCommonJsDependencies": [
-                            "showdown"
+                            "./node_modules/quill/dist/quill.min.js",
+                            "./node_modules/turndown/dist/turndown.js"
                         ]
                     },
                     "configurations": {
                         "production": {
+                            "baseHref": "/release-notes-management/",
                             "budgets": [
                                 {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb"
-                                }
-                            ],
-                            "fileReplacements": [
+                                    "type": "initial",
+                                    "maximumWarning": "1mb",
+                                    "maximumError": "2mb"
+                                },
                                 {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "16kb",
+                                    "maximumError": "32kb"
                                 }
                             ],
-                            "baseHref": "/release-notes-management/",
                             "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
                         }
                     },
-                    "defaultConfiguration": ""
+                    "defaultConfiguration": "production"
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "release-notes-service-ui:build",
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
                             "browserTarget": "release-notes-service-ui:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "release-notes-service-ui:build:development"
                         }
-                    }
+                    },
+                    "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
                         "browserTarget": "release-notes-service-ui:build"
                     }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
-                    }
                 }
             }
         }
-    },
-    "defaultProject": "release-notes-service-ui"
+    }
 }

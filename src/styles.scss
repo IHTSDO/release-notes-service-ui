@@ -1,11 +1,11 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~src/material-theme.scss';
-@import '~src/variables.scss';
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'src/material-theme.scss';
+@import 'src/variables.scss';
 @import 'toastr';
 
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.bubble.css';
-@import '~quill/dist/quill.snow.css';
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.bubble.css';
+@import 'quill/dist/quill.snow.css';
 
 html {
     font-size: 62.5%;
