@@ -5,7 +5,8 @@
             <markdown [data]="note?.content">{{note?.content}}</markdown>
         </div>
     </ng-container>
-    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
+<!--    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>-->
+    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('preview-modal')"><i class="fas fa-code-branch pe-2"></i>PREVIEW</button>
 </div>
 
 <div id="main-view" *ngIf="activeReleaseNote">
@@ -55,6 +56,26 @@
     </div>
     <div footer>
         <button type="button" class="btn" (click)="closeModal('version-modal')">CANCEL</button>
-        <button type="button" class="btn accept" (click)="versionReleaseNotes(effectiveTime.value); closeModal('version-modal')">VERSION</button>
+        <button type="button" class="btn accept" (click)="versionReleaseNotes(effectiveTime.value); closeModal('version-modal');">PUBLISH</button>
+    </div>
+</app-modal>
+
+<app-modal id="preview-modal" class="modal" [size]="'xl'">
+    <div header><h3 class="mb-0">Release Note Preview</h3></div>
+    <div body class="rounded object m-3">
+        <ng-container *ngFor="let releaseNote of releaseNotes">
+            <ng-container *ngFor="let note of releaseNote.children">
+                <ng-container *ngIf="note?.content">
+                    <div class="p-5">
+                        <h1 class="mb-3">{{note?.title}}</h1>
+                        <markdown [data]="note?.content">{{note?.content}}</markdown>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('preview-modal')">CLOSE</button>
+        <button type="button" class="btn accept" (click)="closeModal('preview-modal'); openModal('version-modal')">VERSION</button>
     </div>
 </app-modal>
