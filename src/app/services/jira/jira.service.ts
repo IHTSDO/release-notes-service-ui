@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ReleaseNotesService} from "../releaseNotes/release-notes.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -36,10 +37,14 @@ export class JiraService {
     }
 
     httpGetKnownJiraIssues(): Observable<any> {
-        return this.http.get<any>('/jira/issue/picker?query=“INT 20240201 - Known Issues (On Hold)” ORDER BY key ASC');
+        return this.http.get<any>('/jira/issue/picker?query=“INT 20240201 - Known Issues (On Hold)” ORDER BY key ASC').pipe(map(data => {
+            return data.sections[0].issues;
+        }));
     }
 
     httpGetResolvedJiraIssues(): Observable<any> {
-        return this.http.get<any>('/jira/issue/picker?query=“INT 20240201 - Resolved Issues” ORDER BY key ASC');
+        return this.http.get<any>('/jira/issue/picker?query=“INT 20240201 - Resolved Issues” ORDER BY key ASC').pipe(map(data => {
+            return data.sections[0].issues;
+        }));
     }
 }
