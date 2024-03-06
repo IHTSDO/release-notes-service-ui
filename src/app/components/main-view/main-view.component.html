@@ -3,63 +3,62 @@
         <div class="p-5" *ngFor="let note of releaseNote.children">
             <h1 class="mb-3">{{note?.title}}</h1>
             <markdown [data]="note?.content">{{note?.content}}</markdown>
-            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">
-                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">
-                    <div class="my-5">
-                        <h1>Known Issues Tables</h1>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium">Key</th>
-                                <th scope="col" class="fw-medium">Summary</th>
-                                <th scope="col" class="fw-medium">Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ng-container *ngFor="let issue of knownJiraIssues">
-                                <tr>
-                                    <th class="fw-medium">{{issue.key}}</th>
-                                    <td>{{issue.summary}}</td>
-                                    <td>{{issue.summaryText}}</td>
-                                </tr>
-                            </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-container>
-                <ng-template #noKnownJiraIssues>
-                    <h3 class="mx-3 my-5">No known Jira Issues</h3>
-                </ng-template>
-                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">
-                    <div class="my-5">
-                        <h1>Resolved Issues Tables</h1>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium">Key</th>
-                                <th scope="col" class="fw-medium">Summary</th>
-                                <th scope="col" class="fw-medium">Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ng-container *ngFor="let issue of resolvedJiraIssues">
-                                <tr>
-                                    <th class="fw-medium">{{issue.key}}</th>
-                                    <td>{{issue.summary}}</td>
-                                    <td>{{issue.summaryText}}</td>
-                                </tr>
-                            </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-container>
-                <ng-template #noResolvedJiraIssues>
-                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>
-                </ng-template>
-            </ng-container>
+<!--            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">-->
+<!--                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Known Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of knownJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noKnownJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No known Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Resolved Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of resolvedJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noResolvedJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--            </ng-container>-->
         </div>
     </ng-container>
-
 
     <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('preview-modal')"><i class="fas fa-code-branch pe-2"></i>PREVIEW</button>
 </div>
@@ -74,60 +73,60 @@
             <ng-container *ngIf="activeReleaseNote?.content">
                 <markdown [data]="activeReleaseNote?.content">{{activeReleaseNote?.content}}</markdown>
             </ng-container>
-            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">
-                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">
-                    <div class="my-5">
-                        <h1>Known Issues Tables</h1>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium">Key</th>
-                                <th scope="col" class="fw-medium">Summary</th>
-                                <th scope="col" class="fw-medium">Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ng-container *ngFor="let issue of knownJiraIssues">
-                                <tr>
-                                    <th class="fw-medium">{{issue.key}}</th>
-                                    <td>{{issue.summary}}</td>
-                                    <td>{{issue.summaryText}}</td>
-                                </tr>
-                            </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-container>
-                <ng-template #noKnownJiraIssues>
-                    <h3 class="mx-3 my-5">No known Jira Issues</h3>
-                </ng-template>
-                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">
-                    <div class="my-5">
-                        <h1>Resolved Issues Tables</h1>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="fw-medium">Key</th>
-                                <th scope="col" class="fw-medium">Summary</th>
-                                <th scope="col" class="fw-medium">Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ng-container *ngFor="let issue of resolvedJiraIssues">
-                                <tr>
-                                    <th class="fw-medium">{{issue.key}}</th>
-                                    <td>{{issue.summary}}</td>
-                                    <td>{{issue.summaryText}}</td>
-                                </tr>
-                            </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-container>
-                <ng-template #noResolvedJiraIssues>
-                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>
-                </ng-template>
-            </ng-container>
+<!--            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">-->
+<!--                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Known Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of knownJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noKnownJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No known Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Resolved Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of resolvedJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noResolvedJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--            </ng-container>-->
         </div>
     </ng-container>
     <ng-container *ngIf="editMode">

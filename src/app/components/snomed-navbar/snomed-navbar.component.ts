@@ -65,25 +65,25 @@ export class SnomedNavbarComponent implements OnInit {
         });
         this.pathingService.setActiveVersion('MAIN');
 
-        forkJoin([
-            this.jiraService.httpGetKnownJiraIssues(),
-            this.jiraService.httpGetResolvedJiraIssues(),
-        ]).subscribe(([known, resolved]) => {
-            this.jiraService.setKnownJiraIssues(known);
-            this.jiraService.setResolvedJiraIssues(resolved);
-        });
+        // forkJoin([
+        //     this.jiraService.httpGetKnownJiraIssues(),
+        //     this.jiraService.httpGetResolvedJiraIssues(),
+        // ]).subscribe(([known, resolved]) => {
+        //     this.jiraService.setKnownJiraIssues(known);
+        //     this.jiraService.setResolvedJiraIssues(resolved);
+        // });
     }
 
     setActiveVersion(version) {
         this.releaseNotesService.setActiveVersion(version);
 
-        forkJoin([
-            this.jiraService.httpGetKnownJiraIssues(),
-            this.jiraService.httpGetResolvedJiraIssues(),
-        ]).subscribe(([known, resolved]) => {
-            this.jiraService.setKnownJiraIssues(known);
-            this.jiraService.setResolvedJiraIssues(resolved);
-        });
+        // forkJoin([
+        //     this.jiraService.httpGetKnownJiraIssues(),
+        //     this.jiraService.httpGetResolvedJiraIssues(),
+        // ]).subscribe(([known, resolved]) => {
+        //     this.jiraService.setKnownJiraIssues(known);
+        //     this.jiraService.setResolvedJiraIssues(resolved);
+        // });
     }
 
     logout() {
