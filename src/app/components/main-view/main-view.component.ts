@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {MarkdownService} from "ngx-markdown";
 import Quill from 'quill';
 import TurndownService from 'turndown';
+import {JiraService} from "../../services/jira/jira.service";
 
 @Component({
     selector: 'app-main-view',
@@ -34,6 +35,11 @@ export class MainViewComponent implements OnInit {
     editMode: any;
     editModeSubscription: Subscription;
 
+    knownJiraIssues: any;
+    knownJiraIssuesSubscription: Subscription;
+    resolvedJiraIssues: any;
+    resolvedJiraIssuesSubscription: Subscription;
+
     quill: any;
     turndown: any;
     toolbarOptions = [
@@ -46,6 +52,7 @@ export class MainViewComponent implements OnInit {
     constructor(private releaseNotesService: ReleaseNotesService,
                 private authenticationService: AuthenticationService,
                 private modalService: ModalService,
+                private jiraService: JiraService,
                 private toastr: ToastrService,
                 private markdownService: MarkdownService) {
         this.activeVersionSubscription = this.releaseNotesService.getActiveVersion().subscribe(data => {
@@ -61,6 +68,8 @@ export class MainViewComponent implements OnInit {
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.rolesSubscription = this.authenticationService.getRoles().subscribe(data => this.roles = data);
+        this.knownJiraIssuesSubscription = this.jiraService.getKnownJiraIssues().subscribe(data => this.knownJiraIssues = data);
+        this.resolvedJiraIssuesSubscription = this.jiraService.getResolvedJiraIssues().subscribe(data => this.resolvedJiraIssues = data);
     }
 
     ngOnInit(): void {

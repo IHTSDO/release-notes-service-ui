@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import {PathingService} from '../../services/pathing/pathing.service';
 import {Location} from '@angular/common';
 import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
+import {JiraService} from "../../services/jira/jira.service";
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -24,11 +25,22 @@ export class SnomedNavbarComponent implements OnInit {
     activeVersion: any;
     activeVersionSubscription: Subscription;
 
-    constructor(private authenticationService: AuthenticationService, private pathingService: PathingService, private releaseNotesService: ReleaseNotesService, private location: Location) {
+    knownJiraIssues: any;
+    knownJiraIssuesSubscription: Subscription;
+    resolvedJiraIssues: any;
+    resolvedJiraIssuesSubscription: Subscription;
+
+    constructor(private authenticationService: AuthenticationService,
+                private pathingService: PathingService,
+                private releaseNotesService: ReleaseNotesService,
+                private jiraService: JiraService,
+                private location: Location) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.versionsSubscription = this.releaseNotesService.getVersions().subscribe(data => this.versions = data);
         this.activeVersionSubscription = this.releaseNotesService.getActiveVersion().subscribe(data => this.activeVersion = data);
+        this.knownJiraIssuesSubscription = this.jiraService.getKnownJiraIssues().subscribe(data => this.knownJiraIssues = data);
+        this.resolvedJiraIssuesSubscription = this.jiraService.getResolvedJiraIssues().subscribe(data => this.resolvedJiraIssues = data);
     }
 
     ngOnInit() {
@@ -52,10 +64,26 @@ export class SnomedNavbarComponent implements OnInit {
             this.releaseNotesService.setVersions(versions);
         });
         this.pathingService.setActiveVersion('MAIN');
+
+        // forkJoin([
+        //     this.jiraService.httpGetKnownJiraIssues(),
+        //     this.jiraService.httpGetResolvedJiraIssues(),
+        // ]).subscribe(([known, resolved]) => {
+        //     this.jiraService.setKnownJiraIssues(known);
+        //     this.jiraService.setResolvedJiraIssues(resolved);
+        // });
     }
 
     setActiveVersion(version) {
         this.releaseNotesService.setActiveVersion(version);
+
+        // forkJoin([
+        //     this.jiraService.httpGetKnownJiraIssues(),
+        //     this.jiraService.httpGetResolvedJiraIssues(),
+        // ]).subscribe(([known, resolved]) => {
+        //     this.jiraService.setKnownJiraIssues(known);
+        //     this.jiraService.setResolvedJiraIssues(resolved);
+        // });
     }
 
     logout() {

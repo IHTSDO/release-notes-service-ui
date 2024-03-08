@@ -3,9 +3,64 @@
         <div class="p-5" *ngFor="let note of releaseNote.children">
             <h1 class="mb-3">{{note?.title}}</h1>
             <markdown [data]="note?.content">{{note?.content}}</markdown>
+<!--            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">-->
+<!--                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Known Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of knownJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noKnownJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No known Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Resolved Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of resolvedJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noResolvedJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--            </ng-container>-->
         </div>
     </ng-container>
-    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
+
+    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('preview-modal')"><i class="fas fa-code-branch pe-2"></i>PREVIEW</button>
 </div>
 
 <div id="main-view" *ngIf="activeReleaseNote">
@@ -18,6 +73,60 @@
             <ng-container *ngIf="activeReleaseNote?.content">
                 <markdown [data]="activeReleaseNote?.content">{{activeReleaseNote?.content}}</markdown>
             </ng-container>
+<!--            <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">-->
+<!--                <ng-container *ngIf="knownJiraIssues?.length; else noKnownJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Known Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of knownJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noKnownJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No known Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--                <ng-container *ngIf="resolvedJiraIssues?.length; else noResolvedJiraIssues">-->
+<!--                    <div class="my-5">-->
+<!--                        <h1>Resolved Issues Tables</h1>-->
+<!--                        <table class="table table-striped">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col" class="fw-medium">Key</th>-->
+<!--                                <th scope="col" class="fw-medium">Summary</th>-->
+<!--                                <th scope="col" class="fw-medium">Description</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <ng-container *ngFor="let issue of resolvedJiraIssues">-->
+<!--                                <tr>-->
+<!--                                    <th class="fw-medium">{{issue.key}}</th>-->
+<!--                                    <td>{{issue.summary}}</td>-->
+<!--                                    <td>{{issue.summaryText}}</td>-->
+<!--                                </tr>-->
+<!--                            </ng-container>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </ng-container>-->
+<!--                <ng-template #noResolvedJiraIssues>-->
+<!--                    <h3 class="mx-3 my-5">No resolved Jira Issues</h3>-->
+<!--                </ng-template>-->
+<!--            </ng-container>-->
         </div>
     </ng-container>
     <ng-container *ngIf="editMode">
@@ -26,7 +135,7 @@
             <div id="quill-editor"></div>
         </div>
     </ng-container>
-    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('version-modal')"><i class="fas fa-code-branch pe-2"></i>VERSION</button>
+    <button *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'" class="btn version" (click)="openModal('preview-modal')"><i class="fas fa-code-branch pe-2"></i>PREVIEW</button>
 </div>
 
 <app-modal id="pdf-modal" class="modal" [size]="'xl'">
@@ -55,6 +164,26 @@
     </div>
     <div footer>
         <button type="button" class="btn" (click)="closeModal('version-modal')">CANCEL</button>
-        <button type="button" class="btn accept" (click)="versionReleaseNotes(effectiveTime.value); closeModal('version-modal')">VERSION</button>
+        <button type="button" class="btn accept" (click)="versionReleaseNotes(effectiveTime.value); closeModal('version-modal');">VERSION</button>
+    </div>
+</app-modal>
+
+<app-modal id="preview-modal" class="modal" [size]="'xl'">
+    <div header><h3 class="mb-0">Release Note Preview</h3></div>
+    <div body class="rounded object m-3">
+        <ng-container *ngFor="let releaseNote of releaseNotes">
+            <ng-container *ngFor="let note of releaseNote.children">
+                <ng-container *ngIf="note?.content">
+                    <div class="p-5">
+                        <h1 class="mb-3">{{note?.title}}</h1>
+                        <markdown [data]="note?.content">{{note?.content}}</markdown>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div footer>
+        <button type="button" class="btn" (click)="closeModal('preview-modal')">CLOSE</button>
+        <button type="button" class="btn accept" (click)="closeModal('preview-modal'); openModal('version-modal')">ACCEPT</button>
     </div>
 </app-modal>
