@@ -35,11 +35,6 @@ export class MainViewComponent implements OnInit {
     editMode: any;
     editModeSubscription: Subscription;
 
-    knownJiraIssues: any;
-    knownJiraIssuesSubscription: Subscription;
-    resolvedJiraIssues: any;
-    resolvedJiraIssuesSubscription: Subscription;
-
     quill: any;
     turndown: any;
     toolbarOptions = [
@@ -68,8 +63,6 @@ export class MainViewComponent implements OnInit {
         this.editModeSubscription = this.releaseNotesService.getEditMode().subscribe(data => this.editMode = data);
         this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.rolesSubscription = this.authenticationService.getRoles().subscribe(data => this.roles = data);
-        this.knownJiraIssuesSubscription = this.jiraService.getKnownJiraIssues().subscribe(data => this.knownJiraIssues = data);
-        this.resolvedJiraIssuesSubscription = this.jiraService.getResolvedJiraIssues().subscribe(data => this.resolvedJiraIssues = data);
     }
 
     ngOnInit(): void {
@@ -135,6 +128,20 @@ export class MainViewComponent implements OnInit {
     }
 
     public openPDF(): void {
+    }
+
+    getVersionDate(activeVersion: string): string {
+        let date = '';
+
+        if (activeVersion) {
+            date = activeVersion.split('/')[1];
+        }
+
+        return date;
+    }
+
+    getMappedName(): string {
+        return 'SNOMED CT International edition';
     }
 
     versionReleaseNotes(effectiveTime: string): void {
