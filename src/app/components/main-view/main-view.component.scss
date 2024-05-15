@@ -61,6 +61,19 @@ div#main-view, div#all-view {
                 background-color: darken($wisteria, 10%);
             }
         }
+
+        &.link {
+            background-color: $wisteria;
+
+            a {
+                color: $white;
+                line-height: 3rem;
+            }
+
+            &:hover {
+                background-color: darken($wisteria, 10%);
+            }
+        }
     }
 }
 
