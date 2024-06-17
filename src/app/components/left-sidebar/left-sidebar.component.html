@@ -15,14 +15,16 @@
                 <button (click)="openModal('delete-modal'); lineItemTempStorage = parent; $event.stopPropagation()"><i class="fas fa-times"></i></button>
             </ng-container>
         </div>
-        <ng-container *ngFor="let child of parent.children | textFilter:textFilter | alphabetical:'title'; let odd = odd">
-            <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.id === activeReleaseNote?.id">
-                {{child.title}}
-                <ng-container *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'">
-                    <button (click)="openModal('delete-modal'); lineItemTempStorage = child; $event.stopPropagation()"><i class="fas fa-times"></i></button>
-                </ng-container>
-            </div>
-        </ng-container>
+        <div cdkDropList (cdkDropListDropped)="dropReleaseNote($event, parent)">
+            <ng-container *ngFor="let child of parent.children | textFilter:textFilter | sort:'sequence'; let odd = odd">
+                <div class="line-item py-2 px-5" (click)="selectReleaseNote(child)" [class.odd]="odd" [class.active]="child?.id === activeReleaseNote?.id" cdkDrag>
+                    {{child.title}}
+                    <ng-container *ngIf="roleContains('RELEASE_LEAD') && activeVersion === 'MAIN'">
+                        <button (click)="openModal('delete-modal'); lineItemTempStorage = child; $event.stopPropagation()"><i class="fas fa-times"></i></button>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
     </ng-container>
 </nav>
 

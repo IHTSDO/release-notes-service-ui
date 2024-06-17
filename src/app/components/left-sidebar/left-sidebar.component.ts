@@ -5,6 +5,8 @@ import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
 import {Note} from '../../models/note';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { sequence } from '@angular/animations';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -151,5 +153,17 @@ export class LeftSidebarComponent implements OnInit {
 
     cloneObject(object): any {
         return JSON.parse(JSON.stringify(object));
+    }
+
+    dropReleaseNote(event: CdkDragDrop<string[]>, parent): void {
+        const lineItemRequest = {
+            parentId: parent.id,
+            id: parent.children[event.previousIndex].id,
+            sequence: parent.children[event.currentIndex].sequence
+        };
+        moveItemInArray(parent.children, event.previousIndex, event.currentIndex);
+        this.releaseNotesService.httpMoveReleaseNote(lineItemRequest).subscribe(data => {
+            parent.children = data;
+        });
     }
 }

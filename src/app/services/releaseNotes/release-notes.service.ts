@@ -114,4 +114,8 @@ export class ReleaseNotesService {
     httpDownloadPDF() {
         FileSaver.saveAs('/release-notes/' + this._activeVersion + '/lineitems/pdf', 'Release Notes');
     }
+
+    httpMoveReleaseNote(lineitem) {
+        return this.http.put('/release-notes/' + this._activeVersion + '/lineitems/' + lineitem.id + '/update-sequence', lineitem);
+    }
 }

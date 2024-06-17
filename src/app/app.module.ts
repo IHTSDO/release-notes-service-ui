@@ -29,6 +29,8 @@ import {ModalComponent} from './components/modal/modal.component';
 import { TopLevelPipe } from './pipes/top-level/top-level.pipe';
 import {MarkdownModule} from "ngx-markdown";
 import {AuthenticationInterceptor} from "./interceptors/authentication.interceptor";
+import { SortPipe } from './pipes/sort/sort.pipe';
+import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
@@ -43,7 +45,8 @@ import {AuthenticationInterceptor} from "./interceptors/authentication.intercept
         TextFilterPipe,
         MainViewComponent,
         ModalComponent,
-        TopLevelPipe
+        TopLevelPipe,
+        SortPipe
     ],
     imports: [
         BrowserModule,
@@ -53,7 +56,9 @@ import {AuthenticationInterceptor} from "./interceptors/authentication.intercept
         NgbTypeaheadModule,
         AppRoutingModule,
         ToastrModule.forRoot(),
-        MarkdownModule.forRoot({ loader: HttpClient })
+        MarkdownModule.forRoot({ loader: HttpClient }),
+        CdkDrag,
+        CdkDropList
     ],
     providers: [
         AuthenticationService,
