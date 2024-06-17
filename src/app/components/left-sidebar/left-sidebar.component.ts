@@ -103,7 +103,9 @@ export class LeftSidebarComponent implements OnInit {
                 this.refresh();
             },
             error => {
-                this.toastr.error('You do not have authorization to do this action', 'ERROR', this.toastrConfig);
+                const hasErrorMessage = error && error.error && error.error.errorMessage;
+                const errorMsg =  hasErrorMessage ? error.error.errorMessage : 'You do not have authorization to do this action';
+                this.toastr.error(errorMsg, 'ERROR', this.toastrConfig);
             });
     }
 
