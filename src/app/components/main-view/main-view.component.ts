@@ -146,6 +146,9 @@ export class MainViewComponent implements OnInit {
 
     versionReleaseNotes(effectiveTime: string): void {
         this.releaseNotesService.httpVersionReleaseNotes({effectiveTime: effectiveTime}).subscribe(data => {
+            this.releaseNotesService.httpGetVersions().subscribe(versions => {
+                this.releaseNotesService.setVersions(versions);
+            });
             this.toastr.success('Release notes successfully versioned', 'SUCCESS');
         }, error => {
             this.toastr.error('Release notes failed to version', 'FAILURE');
