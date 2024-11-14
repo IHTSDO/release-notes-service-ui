@@ -95,14 +95,17 @@
 <app-modal id="preview-modal" class="modal" [size]="'xl'">
     <div header><h3 class="mb-0">Release Note Preview</h3></div>
     <div body class="rounded object m-3">
-        <ng-container *ngFor="let releaseNote of releaseNotes">
-            <ng-container *ngFor="let note of releaseNote.children">
-                <ng-container *ngIf="note?.content">
-                    <div class="p-5">
-                        <h1 class="mb-3">{{note?.title}}</h1>
-                        <markdown [data]="note?.content">{{note?.content}}</markdown>
-                    </div>
-                </ng-container>
+        <ng-container *ngFor="let releaseNote of releaseNotes; index as parentI">
+            <div class="mb-3 px-5"><h1>{{parentI + 1}}. {{releaseNote?.title}}</h1></div>
+            <ng-container *ngFor="let note of releaseNote.children; index as childI">
+                <div class="px-5 pb-5">
+                    <h2>{{parentI + 1}}.{{childI + 1}}. {{note?.title}}</h2>
+                    <ng-container *ngIf="note?.content">
+                        <div>
+                            <markdown [data]="note?.content">{{note?.content}}</markdown>
+                        </div>
+                    </ng-container>
+                </div>
             </ng-container>
         </ng-container>
     </div>
