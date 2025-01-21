@@ -31,6 +31,7 @@ import {MarkdownModule} from "ngx-markdown";
 import {AuthenticationInterceptor} from "./interceptors/authentication.interceptor";
 import { SortPipe } from './pipes/sort/sort.pipe';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { NoteWithContentFilterPipe } from './pipes/note-filter/note-with-content-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
         MainViewComponent,
         ModalComponent,
         TopLevelPipe,
-        SortPipe
+        SortPipe,
+        NoteWithContentFilterPipe
     ],
     imports: [
         BrowserModule,
