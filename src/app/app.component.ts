@@ -9,11 +9,16 @@ import {StatusPageService} from './services/statusPage/status-page.service';
 import {Observable} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, switchMap, tap, filter, map} from 'rxjs/operators';
 import {TerminologyServerService} from './services/terminologyServer/terminology-server.service';
+import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { MainViewComponent } from './components/main-view/main-view.component';
+import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, MainViewComponent, SnomedFooterComponent]
 })
 export class AppComponent implements OnInit {
 

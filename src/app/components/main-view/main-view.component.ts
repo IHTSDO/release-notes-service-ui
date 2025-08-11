@@ -4,15 +4,19 @@ import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.ser
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import {ModalService} from '../../services/modal/modal.service';
 import {ToastrService} from 'ngx-toastr';
-import {MarkdownService} from "ngx-markdown";
+import { MarkdownService, MarkdownComponent } from "ngx-markdown";
 import Quill from 'quill';
 import TurndownService from 'turndown';
 import {JiraService} from "../../services/jira/jira.service";
+import { NgIf, NgFor } from '@angular/common';
+import { ModalComponent } from '../modal/modal.component';
+import { NoteWithContentFilterPipe } from '../../pipes/note-filter/note-with-content-filter.pipe';
 
 @Component({
     selector: 'app-main-view',
     templateUrl: './main-view.component.html',
-    styleUrls: ['./main-view.component.scss']
+    styleUrls: ['./main-view.component.scss'],
+    imports: [NgIf, NgFor, MarkdownComponent, ModalComponent, NoteWithContentFilterPipe]
 })
 export class MainViewComponent implements OnInit {
 

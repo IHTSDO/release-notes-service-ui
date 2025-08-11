@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject, Subscription} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {ReleaseNotesService} from "../releaseNotes/release-notes.service";
 import {map} from "rxjs/operators";
 

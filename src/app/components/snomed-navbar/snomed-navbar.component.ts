@@ -3,14 +3,17 @@ import {forkJoin, Subscription} from 'rxjs';
 import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import {PathingService} from '../../services/pathing/pathing.service';
-import {Location} from '@angular/common';
+import { Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
 import {JiraService} from "../../services/jira/jira.service";
+import { RouterLink } from '@angular/router';
+import { ReverseAlphabeticalPipe } from '../../pipes/reverse-alphabetical/reverse-alphabetical.pipe';
 
 @Component({
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
-    styleUrls: ['./snomed-navbar.component.scss']
+    styleUrls: ['./snomed-navbar.component.scss'],
+    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, ReverseAlphabeticalPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'topLevel'
-})
+@Pipe({ name: 'topLevel' })
 export class TopLevelPipe implements PipeTransform {
 
     transform(items: any[]): any {

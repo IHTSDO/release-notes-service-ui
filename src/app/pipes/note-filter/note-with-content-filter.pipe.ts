@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'noteWithContentFilter'
-})
+@Pipe({ name: 'noteWithContentFilter' })
 export class NoteWithContentFilterPipe implements PipeTransform {
 
   transform(value: any[]): any[] {

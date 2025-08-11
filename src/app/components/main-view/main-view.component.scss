@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use 'src/variables' as *;
+@use 'sass:color';
 
 div#main-view, div#all-view {
     margin-left: 32rem;
@@ -29,7 +30,7 @@ div#main-view, div#all-view {
             padding-left: 9px;
 
             &:hover {
-                background-color: darken($fruit-salad, 10%);
+                background-color: color.adjust($fruit-salad,$lightness: -10%);
             }
         }
 
@@ -44,7 +45,7 @@ div#main-view, div#all-view {
             padding-left: 8px;
 
             &:hover {
-                background-color: darken($sea-buckthorn, 10%);
+                background-color: color.adjust($sea-buckthorn,$lightness: -10%);
             }
         }
 
@@ -58,7 +59,7 @@ div#main-view, div#all-view {
             padding-left: 8px;
 
             &:hover {
-                background-color: darken($wisteria, 10%);
+                background-color: color.adjust($wisteria,$lightness: -10%);
             }
         }
 
@@ -71,7 +72,7 @@ div#main-view, div#all-view {
             }
 
             &:hover {
-                background-color: darken($wisteria, 10%);
+                background-color: color.adjust($wisteria,$lightness: -10%);
             }
         }
     }

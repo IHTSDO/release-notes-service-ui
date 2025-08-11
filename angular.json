@@ -15,11 +15,12 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular/build:application",
                     "options": {
-                        "outputPath": "dist/release-notes-service-ui",
+                        "outputPath": {
+                          "base": "dist/release-notes-service-ui"
+                        },
                         "index": "src/index.html",
-                        "main": "src/main.ts",
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
@@ -42,7 +43,13 @@
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js",
                             "./node_modules/quill/dist/quill.min.js",
                             "./node_modules/turndown/dist/turndown.js"
-                        ]
+                        ],
+                        "browser": "src/main.ts",
+                        "stylePreprocessorOptions": {
+                          "includePaths": [
+                            "."
+                          ]
+                        }
                     },
                     "configurations": {
                         "production": {
@@ -50,9 +57,7 @@
                             "outputHashing": "all"
                         },
                         "development": {
-                            "buildOptimizer": false,
-                            "optimization": false,
-                            "vendorChunk": true,
+                          "optimization": false,
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": true
@@ -61,24 +66,24 @@
                     "defaultConfiguration": "production"
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "builder": "@angular/build:dev-server",
                     "options": {
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "release-notes-service-ui:build:production"
+                          "buildTarget": "release-notes-service-ui:build:production"
                         },
                         "development": {
-                            "browserTarget": "release-notes-service-ui:build:development"
+                          "buildTarget": "release-notes-service-ui:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "builder": "@angular/build:extract-i18n",
                     "options": {
-                        "browserTarget": "release-notes-service-ui:build"
+                      "buildTarget": "release-notes-service-ui:build"
                     }
                 }
             }

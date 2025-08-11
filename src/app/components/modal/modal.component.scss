@@ -1,4 +1,6 @@
-@import 'src/styles.scss';
+@use 'src/styles.scss';
+@use 'sass:color';
+@use 'src/variables' as *;
 
 app-modal {
     /* modals are hidden by default */
@@ -87,7 +89,7 @@ app-modal {
                         background-color: $fruit-salad;
 
                         &:hover {
-                            background-color: darken($fruit-salad, 10%);
+                            background-color: color.adjust($fruit-salad,$lightness: -10%);
                         }
                     }
 
@@ -96,7 +98,7 @@ app-modal {
                         background-color: $mandy;
 
                         &:hover {
-                            background-color: darken($mandy, 10%);
+                            background-color: color.adjust($mandy,$lightness: -10%);
                         }
                     }
                 }

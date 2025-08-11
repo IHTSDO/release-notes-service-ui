@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'reverseAlphabetical'
-})
+@Pipe({ name: 'reverseAlphabetical' })
 export class ReverseAlphabeticalPipe implements PipeTransform {
 
     transform(items: any[]): any {
