@@ -1,31 +1,23 @@
-import {
-    HttpEvent,
-    HttpHandler,
-    HttpInterceptor,
-    HttpRequest,
-} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import { HttpEvent, HttpInterceptorFn } from '@angular/common/http';
+
 import {map, catchError} from 'rxjs/operators';
 import {AuthoringService} from "../services/authoring/authoring.service";
+import { inject } from '@angular/core';
 
 
-@Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
+export const authenticationInterceptorFn : HttpInterceptorFn = (request,next ) => {
 
-    constructor(private authoringService: AuthoringService) {
+const authoringService=inject(AuthoringService);
 
-    }
-
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(
+  
+        return next(request).pipe(
             map((event: HttpEvent<any>) => {
                 return event;
             }),
             catchError(err => {
                 if (err.status === 403) {
                     let config: any = {};
-                    this.authoringService.getUIConfiguration().subscribe(data => {
+                    authoringService.getUIConfiguration().subscribe(data => {
                         config = data;
                         window.location.href =
                             config.endpoints.imsEndpoint
@@ -36,5 +28,5 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 throw err;
             })
         );
-    }
-}
+    };
+

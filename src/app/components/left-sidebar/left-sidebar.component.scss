@@ -1,4 +1,5 @@
-@import 'src/variables.scss';
+@use 'src/variables' as *;
+@use 'sass:color';
 
 nav#sidebar {
     position: fixed;
@@ -31,7 +32,7 @@ nav#sidebar {
                 justify-content: center;
 
                 &.new {
-                    background-color: lighten($fruit-salad, 10%);
+                    background-color: color.adjust($fruit-salad,$lightness: 10%);
 
                     &:hover {
                         background-color: $fruit-salad;
@@ -39,7 +40,7 @@ nav#sidebar {
                 }
 
                 &.pdf {
-                    background-color: lighten($wisteria, 10%);
+                    background-color: color.adjust($wisteria,$lightness: 10%);
 
                     &:hover {
                         background-color: $wisteria;
@@ -58,19 +59,19 @@ nav#sidebar {
         border-bottom: 1px $ghost-grey solid;
 
         &.odd {
-            background-color: darken($alto-white, 2%);
+            background-color: color.adjust($alto-white,$lightness: -2%);
         }
 
         &.top-level {
-            background-color: lighten($slate-grey, 25%);
+            background-color: color.adjust($slate-grey,$lightness: 25%);
 
             &:hover {
-                background-color: lighten($slate-grey, 20%);
+                background-color: color.adjust($slate-grey,$lightness: 20%);
             }
         }
 
         &:hover {
-            background-color: darken($alto-white, 5%);
+            background-color: color.adjust($alto-white,$lightness: -5%);
 
             & > button {
                 display: block;
@@ -83,7 +84,7 @@ nav#sidebar {
             background-color: $anakiwa;
 
             &:hover {
-                background-color: darken($anakiwa, 5%);
+                background-color: color.adjust($anakiwa,$lightness: -5%);
             }
         }
 
@@ -97,7 +98,7 @@ nav#sidebar {
             color: $mandy;
 
             &:hover {
-                color: darken($mandy, 10%);
+                color: color.adjust($mandy,$lightness: -10%);
             }
         }
     }

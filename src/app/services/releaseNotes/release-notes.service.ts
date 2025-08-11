@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject, Subscription} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import * as FileSaver from 'file-saver';
+
 declare var require: any
-const FileSaver = require('file-saver');
+
 
 @Injectable({
     providedIn: 'root'
