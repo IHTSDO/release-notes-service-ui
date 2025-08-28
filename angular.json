@@ -41,10 +41,14 @@
                             "./node_modules/jquery/dist/jquery.min.js",
                             "./node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "./node_modules/quill/dist/quill.min.js",
                             "./node_modules/turndown/dist/turndown.js"
                         ],
                         "browser": "src/main.ts",
+                        "allowedCommonJsDependencies": [
+                            "jquery",
+                            "quill-delta",
+                            "file-saver"
+                        ],
                         "stylePreprocessorOptions": {
                           "includePaths": [
                             "."
