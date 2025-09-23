@@ -6,21 +6,29 @@ import { BranchingService } from './services/branching/branching.service';
 import { EnvService } from './services/environment/env.service';
 import { ToastrService } from 'ngx-toastr';
 import {StatusPageService} from './services/statusPage/status-page.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, switchMap, tap, filter, map} from 'rxjs/operators';
 import {TerminologyServerService} from './services/terminologyServer/terminology-server.service';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
 import { MainViewComponent } from './components/main-view/main-view.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
+import {DrawerComponent} from "./components/drawer/drawer.component";
+import {NgIf} from "@angular/common";
+import {DrawerService} from "./services/drawer.service";
+import {ConfigService} from "./services/config.service";
+import {User} from "./models/user";
+import {AuthenticationService} from "./services/authentication/authentication.service";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [SnomedNavbarComponent, LeftSidebarComponent, MainViewComponent, SnomedFooterComponent]
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, MainViewComponent, SnomedFooterComponent, NgIf, DrawerComponent]
 })
 export class AppComponent implements OnInit {
+
+    user: User;
 
     versions: object;
     environment: string;
@@ -28,6 +36,9 @@ export class AppComponent implements OnInit {
         closeButton: true,
         disableTimeOut: true
     };
+
+    drawerOpen: any;
+    drawerOpenSubscription: Subscription;
 
     scheduledAlerts: any[] = [];
     basicTypeahead: string;
@@ -48,9 +59,13 @@ export class AppComponent implements OnInit {
                 private branchingService: BranchingService,
                 private envService: EnvService,
                 private toastr: ToastrService,
+                private drawerService: DrawerService,
+                private configService: ConfigService,
+                private authenticationService: AuthenticationService,
                 private titleService: Title,
                 private statusService: StatusPageService,
                 private terminologyService: TerminologyServerService) {
+        this.drawerOpenSubscription = this.drawerService.getDrawerOpen().subscribe(data => this.drawerOpen = data);
         this.spinner.id = 'spinner';
         this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'text-slate-grey', 'position-absolute');
         this.spinner.style.top = '7px';
@@ -71,6 +86,17 @@ export class AppComponent implements OnInit {
 
         this.branchingService.setBranchPath('MAIN');
         this.assignFavicon();
+
+        this.configService.loadConfig().subscribe(data => {
+            this.authenticationService.httpGetUser().subscribe(user => {
+                this.user = user;
+                this.authenticationService.setUser(user);
+
+                this.authenticationService.httpGetRoles().subscribe(roles => {
+                    this.authenticationService.setRoles(roles['userRoles']);
+                });
+            });
+        });
 
         // this.checkSchedule();
         // setInterval(() => this.checkSchedule(), 60000);

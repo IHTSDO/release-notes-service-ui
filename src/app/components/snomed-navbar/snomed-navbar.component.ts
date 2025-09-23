@@ -8,6 +8,8 @@ import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.ser
 import {JiraService} from "../../services/jira/jira.service";
 import { RouterLink } from '@angular/router';
 import { ReverseAlphabeticalPipe } from '../../pipes/reverse-alphabetical/reverse-alphabetical.pipe';
+import {ConfigService} from "../../services/config.service";
+import {DrawerService} from "../../services/drawer.service";
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -36,6 +38,8 @@ export class SnomedNavbarComponent implements OnInit {
     constructor(private authenticationService: AuthenticationService,
                 private pathingService: PathingService,
                 private releaseNotesService: ReleaseNotesService,
+                private drawerService: DrawerService,
+                private configService: ConfigService,
                 private jiraService: JiraService,
                 private location: Location) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
@@ -47,46 +51,28 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authenticationService.httpGetUser().subscribe(user => {
-            this.authenticationService.setUser(user);
-
-            this.authenticationService.httpGetRoles().subscribe(roles => {
-                this.authenticationService.setRoles(roles['userRoles']);
-            });
-        });
-        this.path = this.location.path();
-
-        // this.pathingService.httpGetVersions().subscribe(versions => {
-        //     this.pathingService.setVersions(versions);
-        //     this.pathingService.setActiveVersion({branchPath: 'MAIN'});
+        // this.authenticationService.httpGetUser().subscribe(user => {
+        //     this.authenticationService.setUser(user);
+        //
+        //     this.authenticationService.httpGetRoles().subscribe(roles => {
+        //         this.authenticationService.setRoles(roles['userRoles']);
+        //     });
         // });
-
-        // this.pathingService.setVersions([]);
+        this.path = this.location.path();
 
         this.releaseNotesService.httpGetVersions().subscribe(versions => {
             this.releaseNotesService.setVersions(versions);
         });
         this.pathingService.setActiveVersion('MAIN');
+    }
 
-        // forkJoin([
-        //     this.jiraService.httpGetKnownJiraIssues(),
-        //     this.jiraService.httpGetResolvedJiraIssues(),
-        // ]).subscribe(([known, resolved]) => {
-        //     this.jiraService.setKnownJiraIssues(known);
-        //     this.jiraService.setResolvedJiraIssues(resolved);
-        // });
+    openDrawer() {
+        this.drawerService.setDrawerOpen(true);
+        document.body.classList.add('app-drawer-open');
     }
 
     setActiveVersion(version) {
         this.releaseNotesService.setActiveVersion(version);
-
-        // forkJoin([
-        //     this.jiraService.httpGetKnownJiraIssues(),
-        //     this.jiraService.httpGetResolvedJiraIssues(),
-        // ]).subscribe(([known, resolved]) => {
-        //     this.jiraService.setKnownJiraIssues(known);
-        //     this.jiraService.setResolvedJiraIssues(resolved);
-        // });
     }
 
     logout() {
