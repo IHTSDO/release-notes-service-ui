@@ -14,7 +14,7 @@ import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.com
 import { MainViewComponent } from './components/main-view/main-view.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import {DrawerComponent} from "./components/drawer/drawer.component";
-import {NgIf} from "@angular/common";
+import {CommonModule} from "@angular/common";
 import {DrawerService} from "./services/drawer.service";
 import {ConfigService} from "./services/config.service";
 import {User} from "./models/user";
@@ -24,7 +24,7 @@ import {AuthenticationService} from "./services/authentication/authentication.se
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [SnomedNavbarComponent, LeftSidebarComponent, MainViewComponent, SnomedFooterComponent, NgIf, DrawerComponent]
+    imports: [SnomedNavbarComponent, LeftSidebarComponent, MainViewComponent, SnomedFooterComponent, CommonModule, DrawerComponent]
 })
 export class AppComponent implements OnInit {
 

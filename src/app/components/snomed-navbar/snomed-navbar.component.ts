@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {forkJoin, Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
 import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import {PathingService} from '../../services/pathing/pathing.service';
-import { Location, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { Location, CommonModule } from '@angular/common';
 import {ReleaseNotesService} from '../../services/releaseNotes/release-notes.service';
 import {JiraService} from "../../services/jira/jira.service";
 import { RouterLink } from '@angular/router';
@@ -15,7 +15,7 @@ import {DrawerService} from "../../services/drawer.service";
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
     styleUrls: ['./snomed-navbar.component.scss'],
-    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, ReverseAlphabeticalPipe]
+    imports: [RouterLink, CommonModule, ReverseAlphabeticalPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

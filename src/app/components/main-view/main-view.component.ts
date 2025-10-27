@@ -8,7 +8,7 @@ import { MarkdownService, MarkdownComponent } from "ngx-markdown";
 import Quill from 'quill';
 import TurndownService from 'turndown';
 import {JiraService} from "../../services/jira/jira.service";
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal/modal.component';
 import { NoteWithContentFilterPipe } from '../../pipes/note-filter/note-with-content-filter.pipe';
 
@@ -16,7 +16,7 @@ import { NoteWithContentFilterPipe } from '../../pipes/note-filter/note-with-con
     selector: 'app-main-view',
     templateUrl: './main-view.component.html',
     styleUrls: ['./main-view.component.scss'],
-    imports: [NgIf, NgFor, MarkdownComponent, ModalComponent, NoteWithContentFilterPipe]
+    imports: [CommonModule, MarkdownComponent, ModalComponent, NoteWithContentFilterPipe]
 })
 export class MainViewComponent implements OnInit {
 

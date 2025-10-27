@@ -6,8 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Note} from '../../models/note';
 import {AuthenticationService} from '../../services/authentication/authentication.service';
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { sequence } from '@angular/animations';
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { TextFilterPipe } from '../../pipes/text-filter/text-filter.pipe';
@@ -17,7 +16,7 @@ import { SortPipe } from '../../pipes/sort/sort.pipe';
     selector: 'app-left-sidebar',
     templateUrl: './left-sidebar.component.html',
     styleUrls: ['./left-sidebar.component.scss'],
-    imports: [NgIf, NgFor, CdkDropList, CdkDrag, ModalComponent, FormsModule, TextFilterPipe, SortPipe]
+    imports: [CommonModule, CdkDropList, CdkDrag, ModalComponent, FormsModule, TextFilterPipe, SortPipe]
 })
 export class LeftSidebarComponent implements OnInit {
 
