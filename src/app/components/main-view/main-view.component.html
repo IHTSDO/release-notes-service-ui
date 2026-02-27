@@ -2,7 +2,7 @@
     <ng-container *ngFor="let releaseNote of releaseNotes">
         <div class="p-5" *ngFor="let note of releaseNote.children">
             <h1 class="mb-3">{{note?.title}}</h1>
-            <markdown [data]="note?.content">{{note?.content}}</markdown>
+            <markdown [data]="normalizedMarkdownContent(note?.content)">{{note?.content}}</markdown>
             <ng-container *ngIf="activeVersion !== 'MAIN'">
                 <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">
                     <button class="btn mt-2 p-0 link">
@@ -33,7 +33,7 @@
         <div class="p-5">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
             <ng-container *ngIf="activeReleaseNote?.content">
-                <markdown [data]="activeReleaseNote?.content">{{activeReleaseNote?.content}}</markdown>
+                <markdown [data]="normalizedMarkdownContent(activeReleaseNote?.content)">{{activeReleaseNote?.content}}</markdown>
             </ng-container>
             <ng-container *ngIf="activeVersion !== 'MAIN'">
                 <ng-container *ngIf="activeReleaseNote?.title === 'Known Issues'">
@@ -56,7 +56,7 @@
     <ng-container *ngIf="editMode">
         <div class="p-5 quill-container">
             <h1 class="mb-3">{{activeReleaseNote?.title}}</h1>
-            <div id="quill-editor"></div>
+            <div #editor class="editor"></div>
         </div>
     </ng-container>
     <button *ngIf="(roleContains('RELEASE_LEAD') || roleContains('RNMS-INT-EDITOR'))&& (activeVersion === 'MAIN' || !activeReleaseNote.released)" class="btn version" (click)="openModal('preview-modal')"><i class="fas fa-code-branch pe-2"></i>PREVIEW</button>
@@ -68,7 +68,7 @@
         <div id="pdf-view" *ngFor="let releaseNote of releaseNotes">
             <div class="p-5" *ngFor="let note of releaseNote.children">
                 <h1 class="mb-3">{{note?.title}}</h1>
-                <markdown [data]="note?.content">{{note?.content}}</markdown>
+                <markdown [data]="normalizedMarkdownContent(note?.content)">{{note?.content}}</markdown>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
                     <h2>{{parentI + 1}}.{{childI + 1}}. {{note?.title}}</h2>
                     <ng-container>
                         <div>
-                            <markdown [data]="note?.content">{{note?.content}}</markdown>
+                            <markdown [data]="normalizedMarkdownContent(note?.content)">{{note?.content}}</markdown>
                         </div>
                     </ng-container>
                 </div>
